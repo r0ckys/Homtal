@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <title>SystemNext IT</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript"
+      src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;700&family=Roboto:wght@400;500&family=Questrial&family=Manrope:wght@500&display=swap" rel="stylesheet">
@@ -23,15 +25,33 @@
 
       /* Mobile Menu Transitions */
       .mobile-menu {
-        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      }
-      .mobile-menu.hidden {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 320px;
+        max-width: 85vw;
+        height: 100vh;
+        background: white;
         transform: translateX(100%);
-        opacity: 0;
+        transition: transform 0.3s ease-in-out;
+        z-index: 100;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
       }
       .mobile-menu.show {
         transform: translateX(0);
+      }
+      .menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        z-index: 99;
+      }
+      .menu-overlay.show {
         opacity: 1;
+        visibility: visible;
       }
 
       /* Hamburger Animation */
@@ -63,37 +83,66 @@
       }
       .input-wrapper {
         position: relative;
-        margin-top: 24px;
+        margin-top: 20px;
       }
       .input-label {
         position: absolute;
-        top: -12px;
-        left: 20px;
+        top: -10px;
+        left: 16px;
         background: white;
-        padding: 0 8px;
-        font-size: 15px;
+        padding: 0 6px;
+        font-size: 13px;
         font-weight: 500;
         color: #333;
         z-index: 10;
+      }
+      @media (min-width: 640px) {
+        .input-label {
+          font-size: 15px;
+          left: 20px;
+          padding: 0 8px;
+          top: -12px;
+        }
       }
       .custom-input {
         width: 100%;
         border: 1.5px solid #e0e0e0;
         border-radius: 12px;
-        padding: 14px 16px 14px 48px;
+        padding: 12px 12px 12px 42px;
         outline: none;
-        font-size: 15px;
+        font-size: 14px;
         transition: border-color 0.2s;
+      }
+      @media (min-width: 640px) {
+        .custom-input {
+          padding: 14px 16px 14px 48px;
+          font-size: 15px;
+        }
       }
       .custom-input:focus {
         border-color: #30A2FF;
       }
       .input-icon {
         position: absolute;
-        left: 16px;
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
         color: #9CA3AF;
+      }
+      @media (min-width: 640px) {
+        .input-icon {
+          left: 16px;
+        }
+      }
+      .input-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      @media (min-width: 640px) {
+        .input-icon svg {
+          width: 24px;
+          height: 24px;
+        }
       }
 
       /* --- Services & Technologies Section Hover Effects --- */
@@ -107,28 +156,277 @@
         background-color: white !important;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
       }
-      /* Specific lift for the Web card with the blur background */
-      .web-card-wrapper:hover {
-        transform: translateY(-12px);
+      /* Web card now uses same hover as other service cards */
+
+      /* Infinite Sliding Animation for Website Cards */
+      @keyframes infiniteSlide {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
       }
-      .web-card-wrapper:hover .web-blur-bg {
+      
+      .slide-container {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+      }
+      
+      .slide-track {
+        display: flex;
+        animation: infiniteSlide 30s linear infinite;
+        width: fit-content;
+      }
+      
+      .slide-track:hover {
+        animation-play-state: paused;
+      }
+      
+      .slide-card {
+        flex: 0 0 300px;
+        margin-right: 12px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        will-change: transform;
+      }
+      
+      .slide-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+      
+      .slide-card img {
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        display: block;
+        width: 100%;
+      }
+      
+      .slide-card:hover img {
+        transform: scale(1.08);
+      }
+      
+      .slide-card button {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        font-weight: 600 !important;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .slide-card button:hover {
+        background: linear-gradient(135deg, #FF6B01 0%, #FF9F1C 100%) !important;
+        color: white !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 20px rgba(255, 107, 1, 0.4) !important;
+      }
+      
+      @media (max-width: 768px) {
+        .slide-card {
+          flex: 0 0 280px;
+        }
+        
+        .slide-card:hover {
+          transform: translateY(-8px) scale(1.01);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        }
+      }
+
+      /* Floating Contact Menu */
+      .contact-menu {
+        position: fixed;
+        bottom: 5rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 9999;
+      }
+      
+      @media (min-width: 640px) {
+        .contact-menu {
+          bottom: 8.5rem;
+          right: 2rem;
+          gap: 1.25rem;
+        }
+      }
+      
+      .contact-menu-item {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transform: scale(0) translateY(20px);
+      }
+      
+      @media (min-width: 640px) {
+        .contact-menu-item {
+          width: 65px;
+          height: 65px;
+        }
+      }
+      
+      .contact-menu.active .contact-menu-item {
         opacity: 1;
-        transform: scale(1.1);
-        filter: blur(30px);
+        transform: scale(1) translateY(0);
       }
-      .web-blur-bg {
-        transition: all 0.5s ease;
+      
+      .contact-menu.active .contact-menu-item:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      
+      .contact-menu.active .contact-menu-item:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      
+      .contact-menu.active .contact-menu-item:nth-child(3) {
+        transition-delay: 0.15s;
+      }
+      
+      .contact-menu.active .contact-menu-item:nth-child(4) {
+        transition-delay: 0.2s;
+      }
+      
+      .contact-menu-item:hover {
+        transform: scale(1.15) translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      }
+      
+      .contact-menu.active .contact-menu-item:hover {
+        transform: scale(1.15) translateY(-2px);
+      }
+      
+      .chat-main-btn {
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 10000;
+        filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
+      }
+      
+      .chat-main-btn:hover:not(.active) {
+        transform: scale(1.1);
+      }
+      
+      .chat-main-btn.active {
+        transform: rotate(45deg) scale(0.95);
+      }
+      
+      /* Mobile optimizations */
+      @media (max-width: 640px) {
+        .contact-menu-item svg {
+          width: 24px !important;
+          height: 24px !important;
+        }
+      }
+
+      /* Uniform Service Selector Circles */
+      .service-selector {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px;
+        min-height: 24px;
+        border-width: 2px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .service-selector > div {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px;
+        min-height: 16px;
+        border-radius: 9999px !important;
+      }
+      
+      /* Video Popup Modal Styles */
+      #modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 1rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+      
+      #modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .glass-card {
+        background: rgba(30, 41, 59, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        max-width: 500px;
+        width: 100%;
+        transform: scale(0.9) translateY(20px);
+        transition: transform 0.3s ease;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+      
+      #modal-overlay.show .glass-card {
+        transform: scale(1) translateY(0);
+      }
+      
+      .gradient-text {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .pulse-icon {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+      
+      /* Hide Google Translate toolbar */
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+      }
+      #google_translate_element {
+        display: none;
+      }
+      .goog-te-gadget {
+        display: none !important;
       }
     </style>
     <script>
+                                                                                                                                                                                        // Store selected services
+                                                                                                                                                                                        let selectedServices = [];
+
       // Mobile Menu Toggle
       function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
         const hamburger = document.getElementById('hamburger');
         const body = document.body;
 
-        menu.classList.toggle('hidden');
         menu.classList.toggle('show');
+        overlay.classList.toggle('show');
         hamburger.classList.toggle('active');
 
         if (menu.classList.contains('show')) {
@@ -138,12 +436,173 @@
         }
       }
 
+                                                                        // Close Mobile Menu
+                                                                        function closeMenu() {
+                                                                          const menu = document.getElementById('mobileMenu');
+                                                                          const overlay = document.getElementById('menuOverlay');
+                                                                          const hamburger = document.getElementById('hamburger');
+                                                                          const body = document.body;
+
+                                                                          menu.classList.remove('show');
+                                                                          overlay.classList.remove('show');
+                                                                          hamburger.classList.remove('active');
+                                                                          body.style.overflow = '';
+                                                                        }
+
+                                                                        // Smooth Scroll to Section
+                                                                        function scrollToSection(sectionId) {
+                                                                          const element = document.getElementById(sectionId);
+                                                                          if (element) {
+                                                                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                                          }
+                                                                        }
+
+                                                                        // Language Toggle
+                                                                        let currentLanguage = 'en'; // en for English (default), bn for Bangla
+
+                                                                        // Initialize Google Translate
+                                                                        function googleTranslateElementInit() {
+                                                                          new google.translate.TranslateElement({
+                                                                            pageLanguage: 'en',
+                                                                            includedLanguages: 'en,bn',
+                                                                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                                                                            autoDisplay: false
+                                                                          }, 'google_translate_element');
+                                                                        }
+
+                                                                        // Function to change language programmatically
+                                                                        function changeLanguage(lang) {
+                                                                          const selectField = document.querySelector('.goog-te-combo');
+                                                                          if (selectField) {
+                                                                            selectField.value = lang;
+                                                                            selectField.dispatchEvent(new Event('change'));
+                                                                          }
+                                                                        }
+
+                                                                        function toggleLanguage() {
+                                                                          const langToggleDesktop = document.getElementById('langToggleDesktop');
+                                                                          const langToggleMobile = document.getElementById('langToggleMobile');
+
+                                                                          if (currentLanguage === 'en') {
+                                                                            // Switch to Bangla
+                                                                            currentLanguage = 'bn';
+                                                                            if (langToggleDesktop) {
+                                                                              langToggleDesktop.querySelector('span').textContent = 'বাংলা';
+                                                                            }
+                                                                            if (langToggleMobile) {
+                                                                              langToggleMobile.querySelector('span').textContent = 'বাংলা';
+                                                                            }
+                                                                            // Wait for Google Translate to be ready
+                                                                            setTimeout(() => changeLanguage('bn'), 100);
+                                                                          } else {
+                                                                            // Switch to English
+                                                                            currentLanguage = 'en';
+                                                                            if (langToggleDesktop) {
+                                                                              langToggleDesktop.querySelector('span').textContent = 'English';
+                                                                            }
+                                                                            if (langToggleMobile) {
+                                                                              langToggleMobile.querySelector('span').textContent = 'English';
+                                                                            }
+                                                                            // Wait for Google Translate to be ready
+                                                                            setTimeout(() => changeLanguage('en'), 100);
+                                                                          }
+                                                                        }
+
+                                                                        // Toggle Contact Menu
+                                                                        function toggleContactMenu() {
+                                                                          const menu = document.getElementById('contactMenu');
+                                                                          const mainBtn = document.getElementById('chatMainBtn');
+                                                                          if (menu && mainBtn) {
+                                                                            menu.classList.toggle('active');
+                                                                            mainBtn.classList.toggle('active');
+                                                                          }
+                                                                        }
+
+                                                                        // Toggle Footer Contact Menu
+                                                                        function toggleContactMenuFooter() {
+                                                                          const menu = document.getElementById('contactMenuFooter');
+                                                                          const mainBtn = document.getElementById('chatMainBtnFooter');
+                                                                          if (menu && mainBtn) {
+                                                                            menu.classList.toggle('active');
+                                                                            mainBtn.classList.toggle('active');
+                                                                          }
+                                                                        }
+
+                                                                        // Open WhatsApp
+                                                                        function openWhatsApp() {
+                                                                          window.open('https://wa.me/8801410050031', '_blank');
+                                                                        }
+
+                                                                        // Open Messenger
+                                                                        function openMessenger() {
+                                                                          window.open('https://www.facebook.com/SystemNIT', '_blank');
+                                                                        }
+
+                                                                        // Open AI Chat - Show Coming Soon message
+                                                                        function openAIChat() {
+                                                                          alert('AI Chatting Coming Soon');
+
+                                                                          // Close the contact menu
+                                                                          const menu1 = document.getElementById('contactMenu');
+                                                                          const btn1 = document.getElementById('chatMainBtn');
+                                                                          const menu2 = document.getElementById('contactMenuFooter');
+                                                                          const btn2 = document.getElementById('chatMainBtnFooter');
+
+                                                                          if (menu1 && menu1.classList.contains('active')) {
+                                                                            menu1.classList.remove('active');
+                                                                            btn1.classList.remove('active');
+                                                                          }
+                                                                          if (menu2 && menu2.classList.contains('active')) {
+                                                                            menu2.classList.remove('active');
+                                                                            btn2.classList.remove('active');
+                                                                          }
+                                                                        }
+
+                                                                        // Toggle service selection (Radio button behavior - only one at a time)
+                                                                        function toggleServiceSelection(element, serviceName, sectionName) {
+                                                                          // Deselect all other services first
+                                                                          const allSelectors = document.querySelectorAll('.service-selector div');
+                                                                          allSelectors.forEach(selector => {
+                                                                            selector.classList.remove('bg-gradient-to-r', 'from-[#FF6B01]', 'to-[#FF9F1C]');
+                                                                            selector.classList.add('bg-white');
+                                                                          });
+
+                                                                          // Select the clicked service
+                                                                          const circle = element.querySelector('.service-selector');
+                                                                          const innerCircle = circle.querySelector('div');
+                                                                          const fullService = sectionName + ' - ' + serviceName;
+
+                                                                          innerCircle.classList.remove('bg-white');
+                                                                          innerCircle.classList.add('bg-gradient-to-r', 'from-[#FF6B01]', 'to-[#FF9F1C]');
+
+                                                                          // Clear array and add only this service
+                                                                          selectedServices = [fullService];
+
+                                                                          updateSelectedServicesDisplay();
+                                                                        }
+
+                                                                        // Update selected services display in modal
+                                                                        function updateSelectedServicesDisplay() {
+                                                                          const display = document.getElementById('selectedServicesDisplay');
+                                                                          const hiddenInput = document.getElementById('selectedServicesInput');
+
+                                                                          if (selectedServices.length > 0) {
+                                                                            display.innerHTML = '<strong>Selected Services:</strong><br>' + selectedServices.map(s => '• ' + s).join('<br>');
+                                                                            display.classList.remove('hidden');
+                                                                            hiddenInput.value = selectedServices.join(', ');
+                                                                          } else {
+                                                                            display.classList.add('hidden');
+                                                                            hiddenInput.value = '';
+                                                                          }
+                                                                        }
+
       // Modal Logic
       function openBookingModal() {
         const modal = document.getElementById('bookingModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
+        updateSelectedServicesDisplay();
         setTimeout(() => {
           modal.classList.add('active');
           modal.style.opacity = '1';
@@ -166,6 +625,7 @@
         const name = document.getElementById('modalName').value;
         const number = document.getElementById('modalNumber').value;
         const note = document.getElementById('modalNote').value;
+        const services = document.getElementById('selectedServicesInput').value;
 
         // Visual feedback for sending
         const submitBtn = event.target.querySelector('button[type="submit"]');
@@ -176,7 +636,8 @@
         const payload = {
           name: name,
           phone: number,
-          message: note
+          message: note,
+          services: services
         };
 
         try {
@@ -207,20 +668,30 @@
         }
       }
 
-      // Close menu when clicking outside
+                                                                                                                                                                                                                  // Close menu when clicking outside or on overlay
+                                                                                                                                                                                                                  function closeMenu() {
+                                                                                                                                                                                                                    const menu = document.getElementById('mobileMenu');
+                                                                                                                                                                                                                    const overlay = document.getElementById('menuOverlay');
+                                                                                                                                                                                                                    const hamburger = document.getElementById('hamburger');
+
+                                                                                                                                                                                                                    menu.classList.remove('show');
+                                                                                                                                                                                                                    overlay.classList.remove('show');
+                                                                                                                                                                                                                    hamburger.classList.remove('active');
+                                                                                                                                                                                                                    document.body.style.overflow = '';
+                                                                                                                                                                                                                  }
+
       document.addEventListener('DOMContentLoaded', function() {
         const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
         const hamburger = document.getElementById('hamburger');
         const modal = document.getElementById('bookingModal');
 
-        document.addEventListener('click', function(event) {
-          if (menu && !menu.classList.contains('hidden')) {
-            const isClickInsideMenu = menu.contains(event.target);
-            const isClickOnHamburger = hamburger.contains(event.target);
-            if (!isClickInsideMenu && !isClickOnHamburger) {
-              toggleMobileMenu();
-            }
-          }
+        // Close menu when clicking overlay
+        if (overlay) {
+          overlay.addEventListener('click', closeMenu);
+        }
+
+        document.addEventListener('click', function (event) {
           if (event.target.id === 'modalOverlay') {
             closeBookingModal();
           }
@@ -228,14 +699,169 @@
 
         document.addEventListener('keydown', function(event) {
           if (event.key === 'Escape') {
-            if (menu && !menu.classList.contains('hidden')) toggleMobileMenu();
+            if (menu && menu.classList.contains('show')) closeMenu();
             closeBookingModal();
+            hidePopup();
           }
         });
       });
+
+  // Video Popup Functions
+  function showPopup() {
+    const modal = document.getElementById('modal-overlay');
+    if (modal) {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      startCountdown();
+    }
+  }
+
+  function hidePopup() {
+    const modal = document.getElementById('modal-overlay');
+    if (modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function startCountdown() {
+    // Set countdown to 7 days from now
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 7);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = launchDate.getTime() - now;
+
+      if (distance < 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('mins').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('mins').textContent = String(minutes).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000); // Update every minute
+  }
+
+  function handleNotify(btn) {
+    const emailInput = document.getElementById('popup-email');
+    const statusMsg = document.getElementById('status-msg');
+    const email = emailInput.value.trim();
+
+    if (!email || !email.includes('@')) {
+      emailInput.style.borderColor = '#ef4444';
+      setTimeout(() => emailInput.style.borderColor = '', 2000);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    setTimeout(() => {
+      btn.textContent = '✓ Subscribed!';
+      btn.style.backgroundColor = '#10b981';
+      statusMsg.style.opacity = '1';
+      emailInput.value = '';
+
+      setTimeout(() => {
+        hidePopup();
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = 'Get Early Access';
+          btn.style.backgroundColor = '';
+          statusMsg.style.opacity = '0';
+        }, 500);
+      }, 2000);
+    }, 1500);
+  }
+
+  // Close popup when clicking outside
+  document.addEventListener('click', function (event) {
+    const modal = document.getElementById('modal-overlay');
+    if (event.target === modal) {
+      hidePopup();
+    }
+  });
     </script>
   </head>
   <body class="bg-white">
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element"></div>
+    
+    <!-- Video Popup Modal -->
+    <div id="modal-overlay">
+      <div class="glass-card relative rounded-[2rem] p-6 sm:p-10 text-center">
+    
+        <!-- Close Button -->
+        <button onclick="hidePopup()"
+          class="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-white transition-colors p-2"
+          aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+    
+        <!-- Video Icon -->
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 pulse-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+    
+        <h2 class="text-white text-2xl sm:text-4xl font-bold mb-3 sm:mb-4 tracking-tight">
+          Video <span class="gradient-text">Coming Soon</span>
+        </h2>
+    
+        <p class="text-slate-400 text-sm sm:text-base mb-6 sm:mb-8 max-w-[280px] sm:max-w-none mx-auto">
+          We're currently editing our latest project. Enter your email to be the first to know when it drops.
+        </p>
+    
+        <!-- Countdown (Fully Responsive Grid) -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
+          <div class="bg-white/5 rounded-xl py-3 px-1 sm:p-3">
+            <span id="days" class="block text-xl sm:text-2xl font-bold text-white">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest">Days</span>
+          </div>
+          <div class="bg-white/5 rounded-xl py-3 px-1 sm:p-3">
+            <span id="hours" class="block text-xl sm:text-2xl font-bold text-white">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest">Hours</span>
+          </div>
+          <div class="bg-white/5 rounded-xl py-3 px-1 sm:p-3">
+            <span id="mins" class="block text-xl sm:text-2xl font-bold text-white">00</span>
+            <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest">Mins</span>
+          </div>
+        </div>
+    
+        <!-- Action Area -->
+        <div class="space-y-3">
+          <input type="email" id="popup-email" placeholder="Enter your email"
+            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm sm:text-base">
+          <button onclick="handleNotify(this)"
+            class="w-full py-3 sm:py-4 bg-white text-slate-900 font-bold rounded-xl hover:bg-blue-50 transition-all active:scale-95 text-sm sm:text-base">
+            Get Early Access
+          </button>
+        </div>
+    
+        <p id="status-msg" class="mt-4 text-xs sm:text-sm text-blue-400 opacity-0 transition-opacity">
+          Awesome! Check your inbox soon.
+        </p>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <div class="relative min-h-[650px] md:min-h-[850px] lg:min-h-[950px] rounded-b-[40px] md:rounded-b-[80px] lg:rounded-b-[120px] overflow-hidden bg-gradient-to-b from-[#E8F4FD] via-[#D4E9FB] to-[#A8D5F8]">
 
@@ -247,22 +873,32 @@
 
           <!-- Desktop Menu - Hidden on mobile/tablet -->
           <div class="hidden xl:flex items-center gap-2 px-1">
-            <button class="flex items-center gap-0.5 px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition" aria-label="Services menu">
+            <button onclick="scrollToSection('services')"
+              class="flex items-center gap-0.5 px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition"
+              aria-label="Services menu">
               <span class="text-[#1a1a1a] text-sm xl:text-base font-medium">Services</span>
               <img class="w-4 h-4" src="https://c.animaapp.com/MnwsBUVG/img/expand-more.svg" alt="" />
             </button>
-            <button class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">SaaS</button>
-            <button class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Websites</button>
-            <button class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Marketing</button>
-            <button class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Tools</button>
-            <button class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Contact us</button>
+            <button onclick="scrollToSection('saas')"
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">SaaS</button>
+            <button onclick="scrollToSection('websites')"
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Websites</button>
+            <button onclick="scrollToSection('marketing')"
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Marketing</button>
+            <button onclick="scrollToSection('tools')"
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Tools</button>
+            <button onclick="scrollToSection('contact')"
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Contact
+              us</button>
           </div>
 
           <!-- Desktop Right Buttons - Hidden on mobile/tablet -->
           <div class="hidden lg:flex items-center gap-1">
-            <button class="flex items-center gap-2 px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition" aria-label="Change language to Bangla">
+            <button onclick="toggleLanguage()" id="langToggleDesktop"
+              class="flex items-center gap-2 px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition"
+              aria-label="Change language">
               <img class="w-6 h-6 lg:w-8 lg:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
-              <span class="text-[#ff6f03] text-sm lg:text-base font-medium">বাংলা</span>
+              <span class="text-[#ff6f03] text-sm lg:text-base font-medium">English</span>
             </button>
             <button class="px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-sm lg:text-base font-medium">Sign in</button>
             <button onclick="openBookingModal()" class="px-4 lg:px-6 py-2 lg:py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-xs lg:text-sm font-bold hover:shadow-lg transition">Book a Call</button>
@@ -286,81 +922,102 @@
             <span class="hamburger-line w-5 sm:w-6 h-0.5 bg-[#1a1a1a]"></span>
           </button>
         </div>
+      </nav>
 
-        <!-- Mobile Menu Overlay -->
-        <div
-          id="mobileMenu"
-          class="mobile-menu hidden fixed inset-0 bg-white z-50 xl:hidden overflow-y-auto"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation menu"
-        >
-          <div class="flex flex-col h-full">
-            <!-- Mobile Menu Header -->
-            <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-200">
-              <img class="h-10 sm:h-12 w-auto" src="https://c.animaapp.com/MnwsBUVG/img/frame-1000001802@4x.png" alt="SystemNext IT Logo" />
-              <button
-                onclick="toggleMobileMenu()"
-                class="w-10 h-10 sm:h-12 flex items-center justify-center rounded-lg hover:bg-gray-100 transition"
-                aria-label="Close navigation menu"
-              >
-                <svg class="w-6 h-6 text-[#1a1a1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      <!-- Menu Overlay Background -->
+      <div id="menuOverlay" class="menu-overlay xl:hidden"></div>
+      
+      <!-- Mobile Menu Drawer -->
+      <div id="mobileMenu" class="mobile-menu xl:hidden overflow-y-auto" role="dialog" aria-modal="true"
+        aria-label="Mobile navigation menu">
+        <div class="flex flex-col h-full">
+          <!-- Mobile Menu Header -->
+          <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-200">
+            <img class="h-10 sm:h-12 w-auto" src="https://c.animaapp.com/MnwsBUVG/img/frame-1000001802@4x.png"
+              alt="SystemNext IT Logo" />
+            <button onclick="toggleMobileMenu()"
+              class="w-10 h-10 sm:h-12 flex items-center justify-center rounded-lg hover:bg-gray-100 transition"
+              aria-label="Close navigation menu">
+              <svg class="w-6 h-6 text-[#1a1a1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </button>
-            </div>
-
-            <!-- Mobile Menu Content -->
-            <div class="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
-              <nav class="space-y-2">
-                <button class="w-full flex items-center justify-between px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left">
-                  <span class="text-[#1a1a1a] text-base sm:text-lg font-medium">Services</span>
-                  <img class="w-5 h-5" src="https://c.animaapp.com/MnwsBUVG/img/expand-more.svg" alt="" />
                 </button>
-                <button class="w-full px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">SaaS</button>
-                <button class="w-full px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Websites</button>
-                <button class="w-full px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Marketing</button>
-                <button class="w-full px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Tools</button>
-                <button class="w-full px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Contact us</button>
+                </div>
+
+          <!-- Mobile Menu Content -->
+          <div class="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
+            <nav class="space-y-2">
+              <a href="#services" onclick="scrollToSection('services'); closeMenu();"
+                class="w-full flex items-center justify-between px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left">
+                <span class="text-[#1a1a1a] text-base sm:text-lg font-medium">Services</span>
+                <img class="w-5 h-5" src="https://c.animaapp.com/MnwsBUVG/img/expand-more.svg" alt="" />
+              </a>
+              <a href="#saas" onclick="scrollToSection('saas'); closeMenu();"
+                class="w-full block px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">SaaS</a>
+              <a href="#websites" onclick="scrollToSection('websites'); closeMenu();"
+                class="w-full block px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Websites</a>
+              <a href="#marketing" onclick="scrollToSection('marketing'); closeMenu();"
+                class="w-full block px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Marketing</a>
+              <a href="#tools" onclick="scrollToSection('tools'); closeMenu();"
+                class="w-full block px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Tools</a>
+              <a href="#contact" onclick="scrollToSection('contact'); closeMenu();"
+                class="w-full block px-4 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition text-left text-[#1a1a1a] text-base sm:text-lg font-medium">Contact
+                us</a>
               </nav>
 
-              <!-- Mobile Menu Actions -->
-              <div class="mt-8 space-y-3 border-t border-gray-200 pt-6">
-                <button class="w-full flex items-center justify-center gap-2 px-6 py-3 sm:py-4 rounded-full hover:bg-gray-100 transition">
-                  <img class="w-7 h-7 sm:w-8 sm:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
-                  <span class="text-[#ff6f03] text-base sm:text-lg font-medium">বাংলা</span>
+            <!-- Mobile Menu Actions -->
+            <div class="mt-8 space-y-3 border-t border-gray-200 pt-6">
+              <button onclick="toggleLanguage()" id="langToggleMobile"
+                class="w-full flex items-center justify-center gap-2 px-6 py-3 sm:py-4 rounded-full hover:bg-gray-100 transition">
+                <img class="w-7 h-7 sm:w-8 sm:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
+                <span class="text-[#ff6f03] text-base sm:text-lg font-medium">English</span>
                 </button>
-                <button class="w-full px-6 py-3 sm:py-4 rounded-full hover:bg-gray-100 transition text-[#ff6f03] text-base sm:text-lg font-medium">Sign in</button>
-                <button onclick="openBookingModal()" class="w-full px-6 py-3 sm:py-4 rounded-full bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base sm:text-lg font-bold hover:shadow-lg transition">Book a Call</button>
+              <button
+                class="w-full px-6 py-3 sm:py-4 rounded-full hover:bg-gray-100 transition text-[#ff6f03] text-base sm:text-lg font-medium">Sign
+                in</button>
+              <button onclick="openBookingModal(); closeMenu();"
+                class="w-full px-6 py-3 sm:py-4 rounded-full bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base sm:text-lg font-bold hover:shadow-lg transition">Book
+                a Call</button>
               </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+              </div>
+              </div>
+              </div>
 
       <!-- Hero Content -->
       <div class="relative max-w-[1152px] mx-auto px-4 pt-10 md:pt-20 text-center">
-        <p class="text-[#ff9c1b] text-xs sm:text-[15px] font-semibold tracking-[0.5px] leading-4 mb-4 sm:mb-6 uppercase">FROM IDEA TO ONLINE SUCCESS</p>
-        <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-[64px] font-medium text-[#1a1a1a] mb-4 leading-tight">
+        <p class="text-[#ff9c1b] text-sm sm:text-[15px] font-semibold tracking-[0.5px] leading-5 mb-3 sm:mb-6 uppercase">FROM
+          IDEA TO ONLINE SUCCESS</p>
+        <h1
+          class="text-[32px] sm:text-5xl md:text-6xl lg:text-[64px] font-medium text-[#1a1a1a] mb-3 sm:mb-4 leading-[1.2] sm:leading-tight">
           Complete Digital <span class="text-[#FF6B01]">Solutions</span>
         </h1>
-        <p class="text-sm sm:text-lg text-[#4a5568] mb-6 sm:mb-8 max-w-[900px] mx-auto">Accelerate your business growth with modern, scalable, and result-driven digital solutions.</p>
+        <p class="text-[15px] sm:text-lg text-[#4a5568] mb-6 sm:mb-8 max-w-[900px] mx-auto leading-relaxed px-2">Accelerate your
+          business growth with modern, scalable, and result-driven digital solutions.</p>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-          <button onclick="openBookingModal()" class="w-full sm:w-auto px-8 py-3 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm sm:text-base font-bold hover:shadow-lg transition">Get Appointment</button>
-          <button class="flex items-center gap-2 px-6 py-2 sm:py-3 rounded-[99px] hover:bg-white/50 transition">
-            <span class="text-[#ff6f03] text-sm sm:text-base font-semibold">How it works</span>
-            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-[#ff6f03]" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 001.664l-3-2z"/>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-8 mb-2">
+          <button onclick="openBookingModal()"
+            class="w-full sm:w-auto px-10 py-3.5 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base sm:text-base font-bold hover:shadow-lg transition">Get
+            Appointment</button>
+          <button onclick="showPopup()"
+            class="flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:py-3 rounded-[99px] hover:bg-white/50 transition">
+            <svg class="w-8 h-8 sm:w-8 sm:h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="16" fill="#FF6F03" fill-opacity="0.1" />
+              <rect width="32" height="32" rx="16" fill="white" fill-opacity="0.78" />
+              <path
+                d="M13 11.891V21.109C13 21.8119 13.7547 22.239 14.3358 21.8564L21.3966 17.2474C21.9345 16.9004 21.9345 16.0996 21.3966 15.7437L14.3358 11.1436C13.7547 10.761 13 11.1881 13 11.891Z"
+                fill="#FF6F03" />
             </svg>
+            <span class="text-[#ff6f03] text-sm sm:text-base font-semibold">How it works</span>
           </button>
         </div>
       </div>
 
       <!-- Hero Image -->
-      <div class="relative mt-12 px-4">
-        <img class="mx-auto w-full max-w-[1100px] h-auto" src="https://c.animaapp.com/MnwsBUVG/img/6-6.png" alt="Dashboard Preview" />
+      <div class="relative mt-8 sm:mt-12 px-4 mb-8">
+        <img class="mx-auto w-full max-w-[1100px] h-auto"
+          src="https://deeplor.s3.us-west-2.amazonaws.com/matting_original/2026/02/08/df7167ba2a904a518a295cf121235681.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260208T201712Z&X-Amz-SignedHeaders=host&X-Amz-Expires=10800&X-Amz-Credential=AKIAROYXHKZUSZONTWIG%2F20260208%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Signature=60b53433c5ad2c10264d105490337a175d403e00a5b77759ff22c94923a739a7"
+          alt="Dashboard Preview" />
       </div>
     </div>
 
@@ -368,24 +1025,27 @@
     <div id="bookingModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 overflow-y-auto">
       <div id="modalOverlay" class="absolute inset-0"></div>
 
-      <div id="modalInner" class="relative bg-white w-full max-w-[95%] sm:max-w-[750px] rounded-2xl sm:rounded-[40px] shadow-2xl p-5 sm:p-10 md:p-12 overflow-hidden">
+      <div id="modalInner"
+        class="relative bg-white w-full max-w-[92%] sm:max-w-[750px] rounded-2xl sm:rounded-[40px] shadow-2xl p-6 sm:p-10 md:p-12 overflow-y-auto max-h-[90vh]">
         <!-- Close Button -->
-        <button onclick="closeBookingModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-[#D1D5DB] hover:text-[#4B5563] transition-colors">
-          <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button onclick="closeBookingModal()"
+          class="absolute top-3 right-3 sm:top-6 sm:right-6 text-[#D1D5DB] hover:text-[#4B5563] transition-colors z-20">
+          <svg class="w-7 h-7 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </button>
 
         <!-- Header -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
-          <div class="bg-gradient-to-r from-[#30A2FF] to-[#0077FF] text-white px-5 py-2.5 sm:px-8 sm:py-4 rounded-full text-sm sm:text-lg md:text-xl font-bold shadow-lg shadow-blue-100">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-6 sm:mb-10 pr-8 sm:pr-0">
+          <div
+            class="bg-gradient-to-r from-[#30A2FF] to-[#0077FF] text-white px-4 py-2 sm:px-8 sm:py-4 rounded-full text-[13px] sm:text-lg md:text-xl font-bold shadow-lg shadow-blue-100 whitespace-nowrap">
             Requests a Call
           </div>
-          <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-[#1a1a1a]">Book an Appointment</h2>
+          <h2 class="text-base sm:text-xl md:text-2xl font-bold text-[#1a1a1a]">Book an Appointment</h2>
         </div>
 
         <!-- Form Fields -->
-        <form onsubmit="handleBookingSubmit(event)" class="space-y-6">
+        <form onsubmit="handleBookingSubmit(event)" class="space-y-5 sm:space-y-6">
           <div class="input-wrapper">
             <label class="input-label">Name*</label>
             <div class="input-icon">
@@ -406,56 +1066,103 @@
             <input type="tel" id="modalNumber" name="phone" placeholder="Enter your Number....." class="custom-input" required />
           </div>
 
-          <button type="submit" class="w-full bg-[#30A2FF] hover:bg-[#0077FF] text-white py-3.5 sm:py-4 md:py-5 rounded-2xl font-bold text-base sm:text-lg md:text-xl shadow-lg transition-all active:scale-[0.98]">
+          <!-- Selected Services Display -->
+          <div id="selectedServicesDisplay"
+            class="hidden bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200 rounded-2xl p-4 text-sm text-gray-700">
+          </div>
+          <input type="hidden" id="selectedServicesInput" name="services" />
+          
+          <button type="submit"
+            class="w-full bg-[#30A2FF] hover:bg-[#0077FF] text-white py-3 sm:py-4 md:py-5 rounded-2xl font-bold text-base sm:text-lg md:text-xl shadow-lg transition-all active:scale-[0.98]">
             Submit
           </button>
 
           <!-- Note Section -->
-          <div class="pt-6">
-            <h3 class="text-2xl font-bold text-[#1a1a1a] mb-3">Note</h3>
-            <textarea id="modalNote" name="note" rows="5" placeholder="Anything you want to say...." class="w-full border-1.5 border-[#e0e0e0] rounded-2xl p-5 outline-none focus:border-[#30A2FF] transition resize-none text-gray-600 text-lg"></textarea>
+          <div class="pt-4 sm:pt-6">
+            <h3 class="text-xl sm:text-2xl font-bold text-[#1a1a1a] mb-2 sm:mb-3">Note</h3>
+            <textarea id="modalNote" name="note" rows="4" placeholder="Anything you want to say...."
+              class="w-full border-1.5 border-[#e0e0e0] rounded-2xl p-3 sm:p-5 outline-none focus:border-[#30A2FF] transition resize-none text-gray-600 text-sm sm:text-lg"></textarea>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Website Showcase Section -->
-    <div class="max-w-[1280px] mx-auto px-4 py-12 sm:py-20 bg-white rounded-[40px] sm:rounded-[100px] -mt-8 sm:-mt-16 relative z-10">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl sm:text-5xl font-medium text-black mb-2">Create an Online Store Today</h2>
-        <p class="text-lg text-[#4e4e4e] font-medium">Innovative web development and digital marketing strategies to scale your business.</p>
+    <div id="websites"
+      class="max-w-[1280px] mx-auto px-4 py-12 sm:py-20 bg-white rounded-[30px] sm:rounded-[100px] -mt-8 sm:-mt-16 relative z-10">
+      <div class="text-center mb-8 sm:mb-12 px-2">
+        <h2 class="text-[28px] sm:text-5xl font-medium text-black mb-3 sm:mb-2 leading-[1.3]">Create an Online Store Today
+        </h2>
+        <p class="text-[15px] sm:text-lg text-[#4e4e4e] font-medium leading-relaxed">Innovative web development and digital
+          marketing strategies to scale your business.</p>
       </div>
 
-      <!-- Website Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-          <img class="w-full h-[199px] object-cover" src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
-          <div class="p-3">
-            <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base font-normal hover:bg-gray-200 transition">View Website</button>
+      <!-- Website Cards - Infinite Slider -->
+      <div class="slide-container mb-6">
+        <div class="slide-track">
+          <!-- Original Cards -->
+          <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568225100.webp"
+              alt="Website" />
+            <div class="p-3">
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+            </div>
           </div>
-        </div>
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-          <img class="w-full h-[199px] object-cover" src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
-          <div class="p-3">
-            <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base font-normal hover:bg-gray-200 transition">View Website</button>
+          <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568303877.webp"
+              alt="Website" />
+            <div class="p-3">
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+            </div>
           </div>
-        </div>
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-          <img class="w-full h-[199px] object-cover" src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
-          <div class="p-3">
-            <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base font-normal hover:bg-gray-200 transition">View Website</button>
+          <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568351412.webp"
+              alt="Website" />
+            <div class="p-3">
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+            </div>
           </div>
-        </div>
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-          <img class="w-full h-[199px] object-cover" src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
-          <div class="p-3">
-            <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base font-normal hover:bg-gray-200 transition">View Website</button>
+          <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568460126.webp"
+              alt="Website" />
+            <div class="p-3">
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+            </div>
+          </div>
+          <!-- Duplicate Cards for Seamless Loop -->
+          <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568493317.webp"
+              alt="Website" />
+            <div class="p-3">
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  </div>
+                  </div>
+              <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+                <img class="w-full h-[199px] object-cover"
+                  src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+                <div class="p-3">
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  </div>
+                  </div>
+              <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+                <img class="w-full h-[199px] object-cover"
+                  src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+                <div class="p-3">
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  </div>
+                  </div>
+              <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+                <img class="w-full h-[199px] object-cover"
+                  src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+                <div class="p-3">
+                      <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                      </div>
           </div>
         </div>
       </div>
 
       <!-- Pagination Dots -->
-      <div class="flex items-center justify-center gap-2 mb-12">
+      <!-- <div class="flex items-center justify-center gap-2 mb-12">
         <div class="w-4 h-4 rounded-full bg-[#e6e6e6]"></div>
         <div class="w-4 h-4 rounded-full bg-[#e6e6e6]"></div>
         <div class="w-12 h-4 rounded-[25px] bg-gradient-to-r from-[#38BDF8] to-[#1E90FF]"></div>
@@ -464,17 +1171,57 @@
         <div class="w-4 h-4 rounded-full bg-[#e6e6e6]"></div>
         <div class="w-4 h-4 rounded-full bg-[#e6e6e6]"></div>
         <div class="w-4 h-4 rounded-full bg-[#e6e6e6]"></div>
-      </div>
+      </div> -->
 
       <!-- CTA Buttons -->
-      <div class="flex items-center justify-center gap-1">
-        <button onclick="openBookingModal()" class="px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition">Build a Website</button>
-        <button class="flex items-center gap-2 px-6 py-2 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-base font-medium">Subscription Packages</button>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-1">
+        <a href="https://allinbangla.com/register" target="_blank"
+          class="w-full sm:w-auto text-center px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition inline-block">Build
+          a Website</a>
+        <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'})"
+          class="w-full sm:w-auto text-center flex items-center justify-center gap-2 px-6 py-2 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-base font-medium">Subscription
+          Packages</button>
       </div>
-    </div>
-
-    <!-- Chat Button -->
-    <img onclick="openBookingModal()" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 w-16 h-16 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] cursor-pointer hover:scale-110 transition z-50" src="https://c.animaapp.com/MnwsBUVG/img/lets-icons-chat-fill.png" alt="Chat" />
+      </div>
+      <!-- Floating Contact Menu -->
+      <div id="contactMenu" class="contact-menu">
+        <!-- AI Chat Button -->
+        <div onclick="openAIChat()" class="contact-menu-item"
+          style="background: linear-gradient(180deg, #2B5876 0%, #4E7BA5 50%, #1E3A52 100%); box-shadow: 0 8px 20px rgba(0,0,0,0.3);"
+          title="AI Chat">
+          <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+        </div>
+        <!-- Messenger Button -->
+        <div onclick="openMessenger()" class="contact-menu-item"
+          style="background: #0084FF; box-shadow: 0 4px 15px rgba(0,132,255,0.4);" title="Messenger">
+          <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.373 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.627 0 12-4.974 12-11.111C24 4.975 18.627 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259L10.733 8l3.13 3.259L19.752 8l-6.559 6.963z" />
+          </svg>
+        </div>
+        <!-- WhatsApp Button -->
+        <div onclick="openWhatsApp()" class="contact-menu-item"
+          style="background: #25D366; box-shadow: 0 4px 15px rgba(37,211,102,0.4);" title="WhatsApp">
+          <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+          </svg>
+        </div>
+        <!-- Close Button -->
+        <div onclick="toggleContactMenu()" class="contact-menu-item"
+          style="background: #10B981; box-shadow: 0 4px 15px rgba(16,185,129,0.4);" title="Close">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+      </div>
+        <!-- Chat Main Button -->
+        <img id="chatMainBtn" onclick="toggleContactMenu()"
+          class="chat-main-btn fixed bottom-4 right-4 sm:bottom-8 sm:right-8 w-14 h-14 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] cursor-pointer transition"
+          style="z-index: 10000;" src="https://c.animaapp.com/MnwsBUVG/img/lets-icons-chat-fill.png" alt="Chat" />
 
     <!-- Business Features Section -->
     <div class="max-w-[970px] mx-auto px-4 py-20">
@@ -519,7 +1266,9 @@
       </div>
 
       <div class="text-center">
-        <button onclick="openBookingModal()" class="px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#38BDF8] to-[#1E90FF] text-white text-sm font-bold hover:shadow-lg transition">View Pricing</button>
+        <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'})"
+          class="px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#38BDF8] to-[#1E90FF] text-white text-sm font-bold hover:shadow-lg transition">View
+          Pricing</button>
       </div>
     </div>
 
@@ -585,7 +1334,8 @@
     </div>
 
     <!-- Features Section -->
-    <div class="bg-gradient-to-b from-[#FF8800]/70 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16">
+    <div id="saas"
+      class="bg-gradient-to-b from-[#FF8800]/70 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16">
       <div class="max-w-[817px] mx-auto text-center mb-10 px-4">
         <p class="text-sm font-medium text-[#2f1700] mb-3">Create Your Shop</p>
         <h2 class="text-base font-normal text-[#2f1700]">Smart automation and Ready-to-launch business websites</h2>
@@ -733,7 +1483,8 @@
     </div>
 
     <!-- Pricing Section -->
-    <div class="bg-gradient-to-b from-[#1E90FF]/60 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16 mt-10 sm:mt-20">
+    <div id="pricingSection"
+      class="bg-gradient-to-b from-[#1E90FF]/60 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16 mt-10 sm:mt-20">
       <div class="text-center mb-12">
         <p class="text-sm font-medium text-[#002d5a] mb-8">CHOOSE YOUR PLAN</p>
         <p class="text-base text-[#002d5a]">Conversion-optimized websites and data-driven marketing designed to grow your revenue and brand.</p>
@@ -741,26 +1492,29 @@
 
       <div class="max-w-[1252px] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <!-- Ready Website -->
-        <div class="bg-white rounded-3xl p-8 relative">
+        <div class="bg-white rounded-3xl p-8 relative flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Ready Website</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Fully managed on our hosting.</p>
 
-          <div class="space-y-6 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'WordPress Website - 5,000 BDT', 'Ready Website')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">WordPress Website - 5,000 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'PHP Laravel Website - 9,999 BDT', 'Ready Website')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">PHP Laravel Website 9,999 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Next.js Website - 20,000 BDT', 'Ready Website')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Next.js Website 20,000 BDT</span>
             </div>
@@ -771,26 +1525,29 @@
         </div>
 
         <!-- Custom Website -->
-        <div class="bg-white rounded-3xl p-8 relative">
+        <div class="bg-white rounded-3xl p-8 relative flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Custom Website</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Flexible hosting: Yours or ours.</p>
 
-          <div class="space-y-4 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'WordPress Website (With 5 Reviews) - 9,999 BDT', 'Custom Website')">
+              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">WordPress Website (With 5 Reviews) 9,999 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'PHP Laravel Website (With 5 Reviews) - Starting From 15,000 BDT', 'Custom Website')">
+              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center service-selector mt-1">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">PHP Laravel Website (With 5 Reviews)<br/>Starting From 15,000 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Next.js Website (With 5 Reviews) - Starting From 30,000 BDT', 'Custom Website')">
+              <div class="w-6 h-6 rounded-full border border-[#ff6a00] flex items-center justify-center service-selector mt-1">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Next.js Website (With 5 Reviews)<br/>Starting From 30,000 BDT</span>
             </div>
@@ -801,25 +1558,30 @@
         </div>
 
         <!-- Website With Source Code -->
-        <div class="bg-white rounded-3xl p-8 relative">
+        <div class="bg-white rounded-3xl p-8 relative flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Website With Source Code</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Your hosting or our managed servers.</p>
 
-          <div class="space-y-3 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'WordPress Website (With 5 Reviews) - Starting From 15,000 BDT', 'Website With Source Code')">
+              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">WordPress Website (With 5 Reviews) Starting From 15,000 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'PHP Laravel Website (With 5 Reviews) - Starting From 45,000 BDT', 'Website With Source Code')">
+              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector mt-1">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">PHP Laravel Website (With 5 Reviews)<br/>Starting From 45,000 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <img class="w-6 h-6" src="https://c.animaapp.com/MnwsBUVG/img/check-circle-30.svg" alt="" />
+            <div class="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Next.js Website (With 5 Reviews) - Starting From 90,000 BDT', 'Website With Source Code')">
+              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector mt-1">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
+              </div>
               <span class="text-base text-[#454452] font-['Questrial']">Next.js Website (With 5 Reviews)<br/>Starting From 90,000 BDT</span>
             </div>
           </div>
@@ -831,26 +1593,45 @@
 
       <!-- App Options -->
       <div class="max-w-[1252px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-white rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <h3 class="text-2xl font-bold text-[#2f2f2f] mb-1">Flutter App</h3>
-            <p class="text-sm text-[#2f2f2f]">APK Build Only Trusted by Google</p>
+        <div class="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 w-full md:w-auto cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+            onclick="toggleServiceSelection(this, 'Flutter App - APK Build', 'Mobile App')">
+            <div
+              class="w-6 h-6 rounded-full border border-[#f07800] flex items-center justify-center service-selector flex-shrink-0">
+              <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
+            </div>
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold text-[#2f2f2f] mb-1">Flutter App</h3>
+              <p class="text-xs md:text-sm text-[#2f2f2f]">APK Build Only Trusted by Google</p>
+              </div>
           </div>
-          <button onclick="openBookingModal()" class="px-12 py-3 rounded-[69px] border border-[#f07800] text-[#f17800] text-sm font-bold hover:bg-[#f07800] hover:text-white transition">Contact Us</button>
+          <button onclick="openBookingModal()"
+            class="px-8 md:px-12 py-3 rounded-[69px] border border-[#f07800] text-[#f17800] text-sm font-bold hover:bg-[#f07800] hover:text-white transition w-full md:w-auto">Contact
+            Us</button>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 flex items-center justify-between">
-          <div>
-            <h3 class="text-2xl font-bold text-[#2f2f2f] mb-1">Google Play Store</h3>
-            <p class="text-sm text-[#2f2f2f]">APK Build With Upload to Play store+ App Store</p>
+        <div class="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 w-full md:w-auto cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+            onclick="toggleServiceSelection(this, 'Google Play Store - Full Publish', 'Mobile App')">
+            <div
+              class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector flex-shrink-0">
+              <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
+            </div>
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold text-[#2f2f2f] mb-1">Google Play Store</h3>
+              <p class="text-xs md:text-sm text-[#2f2f2f]">APK Build With Upload to Play store+ App Store</p>
+              </div>
           </div>
-          <button onclick="openBookingModal()" class="px-12 py-3 rounded-[69px] border border-[#3854f8] text-[#3854f8] text-sm font-bold hover:bg-[#3854f8] hover:text-white transition">Contact Us</button>
+          <button onclick="openBookingModal()"
+            class="px-8 md:px-12 py-3 rounded-[69px] border border-[#3854f8] text-[#3854f8] text-sm font-bold hover:bg-[#3854f8] hover:text-white transition w-full md:w-auto">Contact
+            Us</button>
         </div>
       </div>
     </div>
 
     <!-- Marketing Section -->
-    <div class="bg-gradient-to-b from-[#D9FF1E]/60 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16 mt-10 sm:mt-20">
+    <div id="marketing"
+      class="bg-gradient-to-b from-[#D9FF1E]/60 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16 mt-10 sm:mt-20">
       <div class="text-center mb-12">
         <p class="text-sm font-medium text-[#002d5a] mb-8">Boost Your Sales</p>
         <p class="text-base text-[#002d5a]">Maximize Your Global Reach and Strategically Multiply Your Business Revenue.</p>
@@ -858,25 +1639,30 @@
 
       <div class="max-w-[1252px] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Facebook Marketing -->
-        <div class="bg-white rounded-3xl p-8">
+        <div class="bg-white rounded-3xl p-8 flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Facebook Marketing</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Proven strategies to boost your online sales.</p>
 
-          <div class="space-y-6 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Post Create and Boost (x1) - 1000 BDT', 'Facebook Marketing')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Post Create and Boost (x1) 1000 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Post Create and Boost (x3) - 2500 BDT', 'Facebook Marketing')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Post Create and Boost (x3) 2500 BDT</span>
             </div>
-            <div class="flex items-center gap-4">
-              <img class="w-6 h-6" src="https://c.animaapp.com/MnwsBUVG/img/check-circle-31.svg" alt="" />
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Post Create and Boost (x8) - 5000 BDT', 'Facebook Marketing')">
+              <div class="w-6 h-6 rounded-full border border-[#008c09] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
+              </div>
               <span class="text-base text-[#454452] font-['Questrial']">Post Create and Boost (x8) 5000 BDT</span>
             </div>
           </div>
@@ -885,32 +1671,36 @@
         </div>
 
         <!-- SEO -->
-        <div class="bg-white rounded-3xl p-8">
+        <div class="bg-white rounded-3xl p-8 flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">SEO</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Better rankings. More traffic. Higher revenue.</p>
 
-          <div class="space-y-3 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'On Page SEO', 'SEO')">
+              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">On Page SEO</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Off Page SEO', 'SEO')">
+              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Off Page SEO</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Local SEO', 'SEO')">
+              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Local SEO</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Technical SEO', 'SEO')">
+              <div class="w-6 h-6 rounded-full border border-[#f17800] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Technical SEO</span>
             </div>
@@ -920,20 +1710,22 @@
         </div>
 
         <!-- Contract Basis -->
-        <div class="bg-white rounded-3xl p-8">
+        <div class="bg-white rounded-3xl p-8 flex flex-col">
           <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Contract Basis</h3>
           <p class="text-sm text-[#2f2f2f] mb-6">Grow your business with long-term organic growth.</p>
 
-          <div class="space-y-3 mb-6">
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+          <div class="space-y-4 mb-6 flex-grow">
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'Full Stack Digital Marketing Package', 'Contract Basis')">
+              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">Full Stack Digital Marketing Package</span>
             </div>
-            <div class="flex items-center gap-4">
-              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center">
-                <div class="w-[18px] h-[18px] rounded-full bg-white"></div>
+            <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+              onclick="toggleServiceSelection(this, 'E-commerce F-commerce Basic Setup', 'Contract Basis')">
+              <div class="w-6 h-6 rounded-full border border-[#3854f8] flex items-center justify-center service-selector">
+                <div class="w-[18px] h-[18px] rounded-full bg-white transition-all duration-200"></div>
               </div>
               <span class="text-base text-[#454452] font-['Questrial']">E-commerce F-commerce Basic Setup</span>
             </div>
@@ -945,7 +1737,8 @@
     </div>
 
     <!-- Technologies Section -->
-    <div class="bg-white rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-20 mt-10 sm:mt-20">
+    <div id="services"
+      class="bg-white rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-20 mt-10 sm:mt-20">
       <div class="max-w-[1207px] mx-auto px-4">
         <div class="text-center mb-10 sm:mb-16">
           <h2 class="text-3xl sm:text-5xl font-medium text-black mb-2">Services & Technologies</h2>
@@ -954,11 +1747,11 @@
 
         <!-- Service Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
-          <!-- Web (Preserved unique layout + Fixed hover) -->
-          <div class="relative web-card-wrapper transition-all duration-300 mt-10 sm:mt-0">
-            <!--<div class="absolute -top-2 left-3 w-full h-80 bg-[#d3d3e3] rounded-[40px] blur-[20px] web-blur-bg"></div>-->
-            <div class="relative bg-gradient-to-b from-transparent to-[#f5f5f5] rounded-3xl sm:rounded-[40px] border-t-[3px] border-[#ff6a00] p-5 sm:p-6 pt-12 sm:pt-16 h-full transition-colors duration-300">
-              <img class="w-20 h-20 sm:w-28 sm:h-28 -mt-10 sm:-mt-20 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653@2x.png" alt="" />
+          <!-- Web -->
+          <div class="service-tech-card relative">
+            <div
+              class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
+              <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653@2x.png" alt="" />
               <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Web</h3>
               <p class="text-base text-[#4e4e4e]"><span class="font-medium">Next.js, React.js</span> Professional web development using modern frameworks like Next.js and React.</p>
             </div>
@@ -1040,194 +1833,270 @@
           <p class="text-lg font-medium text-[#707070] mb-16">A venture of SystemNext IT</p>
 
           <div class="flex flex-col items-center gap-6">
-            <div class="relative">
-              <img class="w-[92px] h-[92px] rounded-full" src="https://c.animaapp.com/MnwsBUVG/img/image-955@2x.png" alt="" />
-              <img class="w-[228px] h-[92px] mt-4" src="https://c.animaapp.com/MnwsBUVG/img/image-954@2x.png" alt="" />
+            <div class="relative flex flex-col items-center">
+              <img class="w-[30%] h-[30%] rounded-full mx-auto" src="https://hdnfltv.com/image/nitimages/pasted_1770580236545.webp"
+                alt="" />
+              <!-- <img class="w-[228px] h-[92px] mt-4 mx-auto" src="https://c.animaapp.com/MnwsBUVG/img/image-954@2x.png" alt="" /> -->
             </div>
-            <p class="text-lg font-medium text-[#0189c5]">www.opbd.shop</p>
+            <p class="text-lg font-medium text-[#0189c5]"><a href="https://www.opbd.shop" target="_blank">www.opbd.shop</a></p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Contact & Footer Section -->
-    <div class="relative mt-12 sm:mt-20">
+    <div id="contact" class="relative mt-12 sm:mt-20 bg-black pb-0">
       <!-- Contact Form -->
-      <div class="max-w-[1196px] mx-auto px-4 relative z-10">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">Contact Us</h2>
-          <p class="text-lg font-medium text-[#707070]">Any question or remarks? Just write us a message!</p>
+      <div class="max-w-[900px] mx-auto px-4 lg:px-4 relative z-10 pb-8 lg:pb-12">
+        <div class="text-center mb-8 lg:mb-12 pt-8 lg:pt-12">
+          <h2 class="text-5xl lg:text-[56px] font-bold text-white mb-4" style="font-family: Poppins;">Contact Us
+          </h2>
+          <p class="text-xl lg:text-2xl font-medium text-[#D6D6D6]" style="font-family: Poppins;">Any
+            question or remarks? Just write us a message!</p>
         </div>
 
         <!-- Functional Contact Form -->
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div class="grid grid-cols-1 lg:grid-cols-5 gap-0">
-            <!-- Left Side - Contact Info -->
-            <div class="lg:col-span-2 bg-gradient-to-br from-[#FF6B01] to-[#FF9F1C] p-8 lg:p-12 text-white">
-              <h3 class="text-2xl lg:text-3xl font-bold mb-4">Contact Information</h3>
-              <p class="text-sm lg:text-base mb-8 opacity-90">Fill up the form and our Team will get back to you within 24 hours.</p>
+        <div class="relative rounded-[40px] shadow-2xl overflow-hidden"
+          style="background: linear-gradient(135deg, #FF6B01 0%, #FF9F1C 25%, #38BDF8 50%, #1E90FF 75%, #0077FF 100%); padding: 2px;">
+          <div class="bg-[#2C2C2C] rounded-[38px]" style="backdrop-filter: blur(20px);">
+            <div class="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-0">
+              <!-- Contact Information Box - Left Side -->
+              <div
+                class="bg-[#1F1F1F] rounded-t-[38px] lg:rounded-t-[38px] lg:rounded-l-[38px] lg:rounded-tr-none px-8 lg:px-10 py-8 lg:py-10 text-white">
+                <h3 class="text-[24px] lg:text-[28px] font-semibold mb-2" style="font-family: Poppins;">Contact Information</h3>
+                <p class="text-base lg:text-lg text-[#C9C9C9] mb-8 lg:mb-12" style="font-family: Poppins; font-weight: 400;">Say
+                  something to start a live chat!</p>
+                <div class="space-y-6 lg:space-y-8 mb-12 lg:mb-16">
+                  <div class="flex items-center gap-4 lg:gap-6">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
+                    </svg>
+                    <a href="tel:+8801410050041" class="text-sm lg:text-base hover:underline"
+                      style="font-family: Poppins; font-weight: 400;">+88 0141-0050041</a>
+                  </div>
+                  <div class="flex items-center gap-4 lg:gap-6">
+                    <svg class="w-5 h-5 lg:w-[21px] lg:h-[21px] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    <a href="https://wa.me/8801410050031" target="_blank" class="text-sm lg:text-base hover:underline"
+                      style="font-family: Poppins; font-weight: 400;">+88 0141-0050031</a>
+                    </div>
+                  <div class="flex items-center gap-4 lg:gap-6">
+                    <img src="https://hdnfltv.com/image/nitimages/fluent_person-support-24-filled__2_.webp"
+                      class="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0" alt="Support" />
+                    <a href="tel:09617510520" class="text-sm lg:text-base hover:underline"
+                      style="font-family: Poppins; font-weight: 400;">09617 510 520</a>
+                  </div>
+                  <div class="flex items-center gap-4 lg:gap-6">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <a href="mailto:info@systemnextit.com" class="text-sm lg:text-base hover:underline"
+                      style="font-family: Poppins; font-weight: 400;">info@systemnextit.com</a>
+                    </div>
+                  <div class="flex items-start gap-4 lg:gap-6">
+                    <svg class="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-sm lg:text-base leading-relaxed" style="font-family: Poppins; font-weight: 400;">D-14/3, Bank Colony,
+                      Savar, Dhaka-1340</span>
+                    </div>
+                    </div>
+                    
+                    <!-- Social Icons -->
+                <div class="flex gap-4 lg:gap-6">
+                  <a href="#"
+                    class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] hover:bg-[#2B2B2B] flex items-center justify-center transition">
+                    <svg class="w-3 h-3" fill="white" viewBox="0 0 24 24">
+                      <path
+                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                    </svg>
+                  </a>
+                  <a href="#"
+                    class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] hover:bg-[#2B2B2B] flex items-center justify-center transition">
+                    <svg class="w-3.5 h-3.5" fill="white" viewBox="0 0 24 24">
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                  </a>
+                  <a href="#"
+                    class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] hover:bg-[#2B2B2B] flex items-center justify-center transition">
+                    <svg class="w-3.5 h-3.5" fill="white" viewBox="0 0 24 24">
+                      <path
+                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
+                  </a>
+                  <a href="#"
+                    class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] hover:bg-[#2B2B2B] flex items-center justify-center transition">
+                    <svg class="w-4 h-4" fill="white" viewBox="0 0 24 24">
+                      <path
+                        d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                  </a>
+                  </div>
+                  </div>
 
-              <div class="space-y-6 mb-12">
-                <div class="flex items-center gap-4">
-                  <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-                  </svg>
-                  <span class="text-sm lg:text-base">+880 1234-567890</span>
-                </div>
-
-                <div class="flex items-center gap-4">
-                  <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                  </svg>
-                  <span class="text-sm lg:text-base">info@systemnext.com</span>
-                </div>
-
-                <div class="flex items-start gap-4">
-                  <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                  </svg>
-                  <span class="text-sm lg:text-base">Dhaka, Bangladesh</span>
-                </div>
+              <!-- Form - Right Side -->
+              <div class="p-8 lg:p-12">
+                <form class="space-y-8 lg:space-y-10"
+                  onsubmit="event.preventDefault(); alert('Message sent! We will contact you soon.')">
+                  <!-- Name/Organization Field -->
+                  <div>
+                    <label class="block text-base font-medium text-white mb-2" style="font-family: Inter; line-height: 20px;">Name /
+                      Organization</label>
+                    <input type="text" placeholder=""
+                      class="w-full px-0 py-3 bg-transparent border-b border-white focus:border-white outline-none transition text-base text-white"
+                      style="font-family: Inter;" />
+                  </div>
+                  <!-- Email and Phone Number Fields -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+                    <div>
+                      <label class="block text-base font-medium text-white mb-2" style="font-family: Inter; line-height: 20px;">Email</label>
+                      <input type="email" placeholder=""
+                        class="w-full px-0 py-3 bg-transparent border-b border-white focus:border-white outline-none transition text-base text-white"
+                        style="font-family: Inter;" />
+                      </div>
+                      <div>
+                      <label class="block text-base font-medium text-white mb-2" style="font-family: Inter; line-height: 20px;">Phone
+                        Number</label>
+                      <input type="tel" placeholder="+XXX XXXX-XXXXXX"
+                        class="w-full px-0 py-3 bg-transparent border-b border-white focus:border-white outline-none transition text-sm text-white placeholder-gray-400"
+                        style="font-family: Inter; line-height: 20px;" />
+                      </div>
+                      </div>
+                  <!-- Select Subject -->
+                  <div>
+                    <label class="block text-base font-semibold text-white mb-4" style="font-family: Inter; line-height: 20px;">Select
+                      Subject?</label>
+                    <div class="grid grid-cols-2 gap-4">
+                      <label class="flex items-center gap-3 cursor-pointer">
+                        <div class="w-[14px] h-[14px] border-2 border-white rounded-full"></div>
+                        <span class="text-[15px] text-white" style="font-family: Inter; font-weight: 400; line-height: 20px;">Saas</span>
+                      </label>
+                      <label class="flex items-center gap-3 cursor-pointer">
+                        <div class="w-[14px] h-[14px] border-2 border-white rounded-full"></div>
+                        <span class="text-[15px] text-white" style="font-family: Inter; font-weight: 400; line-height: 20px;">Website</span>
+                      </label>
+                      <label class="flex items-center gap-3 cursor-pointer">
+                        <div class="w-[14px] h-[14px] border-2 border-white rounded-full"></div>
+                        <span class="text-[15px] text-white" style="font-family: Inter; font-weight: 400; line-height: 20px;">Degital
+                          Marketing</span>
+                      </label>
+                      <label class="flex items-center gap-3 cursor-pointer">
+                        <div class="w-[14px] h-[14px] border-2 border-white rounded-full"></div>
+                        <span class="text-[15px] text-white" style="font-family: Inter; font-weight: 400; line-height: 20px;">Others</span>
+                      </label>
+                      </div>
+                      </div>
+                  <!--Message -->
+                  <div>
+                    <label class="block text-base font-medium text-white mb-2"
+                      style="font-family: Inter; line-height: 20px;">Message</label>
+                    <textarea rows="4" placeholder="Write your message.."
+                      class="w-full px-4 py-3 bg-transparent border border-white focus:border-white outline-none transition resize-none text-base text-white rounded-lg placeholder-gray-400"
+                      style="font-family: Inter; font-size: 13px; line-height: 20px; font-weight: 500;"></textarea>
+                    </div>
+                  <!-- Submit Button -->
+                  <div class="flex justify-end pt-4">
+                    <button type="submit"
+                      class="px-12 py-4 rounded-md bg-[#3D3D3D] hover:bg-[#4D4D4D] text-white text-lg font-medium transition"
+                      style="font-family: Inter; font-weight: 500; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.12);">
+                      Send Message
+                    </button>
+                    </div>
+                    </form>
+              </div>
               </div>
 
-              <!-- Social Icons -->
-              <div class="flex gap-4">
-                <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.441 16.892c-2.102.144-6.784.144-8.883 0C5.282 16.736 5.017 15.622 5 12c.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0C18.718 7.264 18.982 8.378 19 12c-.018 3.629-.285 4.736-2.559 4.892zM10 9.658l4.917 2.338L10 14.342V9.658z"/></svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Right Side - Form -->
-            <div class="lg:col-span-3 p-6 lg:p-12">
-              <form class="space-y-6" onsubmit="event.preventDefault(); alert('Message sent! We will contact you soon.')">
-                <!-- Name Fields -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                    <input type="text" placeholder="John" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-[#FF6B01] outline-none transition text-base" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                    <input type="text" placeholder="Doe" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-[#FF6B01] outline-none transition text-base" />
-                  </div>
-                </div>
-
-                <!-- Contact Fields -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" placeholder="john@example.com" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-[#FF6B01] outline-none transition text-base" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                    <input type="tel" placeholder="+880 1234-567890" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-[#FF6B01] outline-none transition text-base" />
-                  </div>
-                </div>
-
-                <!-- Subject -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-3">Select Subject?</label>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="subject" value="general" class="w-4 h-4 text-[#FF6B01] focus:ring-[#FF6B01]" />
-                      <span class="text-sm text-gray-700">General Inquiry</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="subject" value="website" class="w-4 h-4 text-[#FF6B01] focus:ring-[#FF6B01]" />
-                      <span class="text-sm text-gray-700">Website</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="subject" value="marketing" class="w-4 h-4 text-[#FF6B01] focus:ring-[#FF6B01]" />
-                      <span class="text-sm text-gray-700">Marketing</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="subject" value="saas" class="w-4 h-4 text-[#FF6B01] focus:ring-[#FF6B01]" />
-                      <span class="text-sm text-gray-700">SaaS</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Message -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea rows="5" placeholder="Write your message..." class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-[#FF6B01] outline-none transition resize-none text-base"></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="flex justify-end pt-4">
-                  <button type="submit" class="px-8 lg:px-12 py-3 lg:py-4 rounded-full bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base lg:text-lg font-bold hover:shadow-lg transition">
-                    Send Message
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Footer -->
-      <footer class="bg-cover bg-center bg-no-repeat mt-10 sm:mt-20 pt-20 sm:pt-40 lg:pt-64 pb-12" style="background-image: url('https://c.animaapp.com/MnwsBUVG/img/rectangle-3842.svg')">
-        <div class="max-w-[1288px] mx-auto px-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12 text-center sm:text-left">
+      <footer class="bg-black lg:bg-cover lg:bg-center lg:bg-no-repeat mt-0 pt-12 lg:pt-20 pb-8 lg:pb-8 px-8 lg:px-32"
+        style="background-image: url('https://c.animaapp.com/MnwsBUVG/img/rectangle-3842.svg')">
+        <div class="w-full">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[0.7fr_0.8fr_0.8fr_1fr_1.3fr] gap-8 lg:gap-6 mb-8 lg:mb-8 text-center lg:text-left">
             <!-- Logo -->
-            <div>
-              <img class="w-[229px] h-auto mb-6" src="https://c.animaapp.com/MnwsBUVG/img/group-2036@2x.png" alt="Logo" />
+            <div class="flex items-start justify-center lg:justify-start mb-2 lg:mb-0">
+              <img src="https://hdnfltv.com/image/nitimages/pasted_1770574705604.webp" alt="Company Logo"
+                class="h-auto max-w-full w-40 lg:w-40">
             </div>
 
             <!-- Company -->
             <div>
-              <h3 class="text-lg font-semibold text-white mb-6">Company</h3>
-              <ul class="space-y-4">
-                <li><a href="#" class="text-base text-white hover:text-gray-300">About</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Contact</a></li>
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+                Company</h3>
+              <ul class="space-y-3.5 lg:space-y-4">
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">About</a></li>
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Portfolio</a></li>
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Services</a></li>
               </ul>
             </div>
 
             <!-- Legal -->
             <div>
-              <h3 class="text-lg font-semibold text-white mb-6">Legal</h3>
-              <ul class="space-y-4">
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Privacy Policy</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Terms & Services</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Terms of Use</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Refund Policy</a></li>
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+                Legal</h3>
+              <ul class="space-y-3.5 lg:space-y-4">
+                <li><a href="/terms-and-conditions" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Privacy Policy</a></li>
+                <li><a href="/terms-and-conditions" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Terms of Use</a></li>
+                <li><a href="/return-policy" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Refund Policy</a></li>
               </ul>
             </div>
 
             <!-- Quick Links -->
             <div>
-              <h3 class="text-lg font-semibold text-white mb-6">Quick Links</h3>
-              <ul class="space-y-4">
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Website Building</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">Service & Technology</a></li>
-                <li><a href="#" class="text-base text-white hover:text-gray-300">SaaS Subscription</a></li>
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+                Quick Links
+              </h3>
+              <ul class="space-y-3.5 lg:space-y-4">
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">SaaS Subscription</a></li>
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Website Building</a></li>
+                <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
+                    style="font-family: Poppins; font-weight: 400;">Service & Technology</a></li>
               </ul>
             </div>
-          </div>
-
-          <div class="border-t border-white/20 pt-8">
-            <div class="bg-[#131313] rounded-lg p-6 max-w-md mx-auto md:ml-auto">
-              <h3 class="text-lg font-semibold text-white mb-4">Join Our Newsletter</h3>
-              <div class="flex gap-2 mb-4">
-                <input type="email" placeholder="Your email address" class="flex-1 bg-[#1e1e1e] text-white px-4 py-2 rounded text-sm" />
-                <button class="bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white px-6 py-2 rounded text-sm font-medium hover:shadow-lg transition">Subscribe</button>
+            <!-- Newsletter -->
+            <div class="col-span-1 lg:col-span-1">
+              <div class="bg-[#131313] rounded-[10px] p-6 lg:p-[22px_22px_18px_22px]">
+                <h3 class="text-lg lg:text-base font-semibold text-white mb-5 lg:mb-5"
+                  style="font-family: Poppins; line-height: 24px;">Join Our Newsletter</h3>
+                <div class="relative mb-4 lg:mb-4">
+                  <input type="email" placeholder="Your email address"
+                    class="w-full h-[50px] lg:h-[48px] bg-[#1E1E1E] text-white px-4 py-3 rounded text-sm lg:text-[12px] placeholder-[#616161] outline-none focus:ring-2 focus:ring-orange-400"
+                    style="font-family: Poppins; font-weight: 400;" />
+                  <button
+                    class="absolute right-0 top-0 h-[50px] lg:h-[48px] px-8 lg:px-9 rounded-r bg-gradient-to-b from-[#FF6A00] to-[#FF9F1C] text-white text-sm font-semibold hover:shadow-lg transition"
+                    style="font-family: Poppins;">Subscribe</button>
+                </div>
+                <p class="text-xs lg:text-[11px] text-white/50 leading-relaxed" style="font-family: Manrope; font-weight: 500;">* Will
+                  send you frequently updates for your better tool management.</p>
               </div>
-              <p class="text-xs text-white/50 font-['Manrope']">* Will send you weekly updates for your better tool management.</p>
             </div>
+          </div>
+          
+          <div class="border-t border-white/20 pt-6 lg:pt-6 mt-8 lg:mt-8 text-center">
+            <p class="text-sm lg:text-sm text-[#7F7F7F] leading-relaxed" style="font-family: Poppins; font-weight: 400;">Copyright
+              © 2026 System Next IT<br class="lg:hidden">All security rights reserved.</p>
           </div>
         </div>
       </footer>
-
-      <!-- Chat Button -->
-      <img onclick="openBookingModal()" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 w-16 h-16 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] cursor-pointer hover:scale-110 transition z-50" src="https://c.animaapp.com/MnwsBUVG/img/lets-icons-chat-fill.png" alt="Chat" />
     </div>
   </body>
 </html>

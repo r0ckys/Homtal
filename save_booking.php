@@ -16,6 +16,7 @@ if (!$data) {
 $name = htmlspecialchars($data['name'] ?? 'Unknown');
 $phone = htmlspecialchars($data['phone'] ?? 'Unknown');
 $message = htmlspecialchars($data['message'] ?? 'N/A');
+$services = htmlspecialchars($data['services'] ?? 'None selected');
 $timestamp = date('Y-m-d H:i:s');
 
 // Format the entry for the master log
@@ -23,6 +24,7 @@ $log_entry = "--- NEW BOOKING REQUEST ---\n";
 $log_entry .= "Time: $timestamp\n";
 $log_entry .= "Name: $name\n";
 $log_entry .= "Phone: $phone\n";
+$log_entry .= "Selected Services: $services\n";
 $log_entry .= "Note: $message\n";
 $log_entry .= "----------------------------\n\n";
 
@@ -38,7 +40,7 @@ $saved_to_individual = file_put_contents($individual_file, $log_entry);
 if ($saved_to_master !== false) {
     // Optionally: Use PHP mail() function to send an email as well
     $to = "info@systemnextit.com";
-    $subject = "New Lead: " . $name;
+    $subject = "New Booking Request: " . $name . ($services != 'None selected' ? " - Services Requested" : "");
     $headers = "From: webmaster@systemnextit.com";
     mail($to, $subject, $log_entry, $headers);
 

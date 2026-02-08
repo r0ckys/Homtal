@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 320px;
+            max-width: 85vw;
+            height: 100vh;
+            background: white;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.show {
+            transform: translateX(0);
+        }
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            z-index: 99;
+        }
+        .menu-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <nav class="bg-white shadow-md p-4">
+        <div class="flex items-center justify-between">
+            <div class="text-xl font-bold">System Next IT</div>
+            <button onclick="toggleMenu()" class="bg-orange-500 text-white px-4 py-2 rounded-lg">
+                ☰ Menu
+            </button>
+        </div>
+    </nav>
+
+    <!-- Overlay -->
+    <div id="overlay" class="menu-overlay"></div>
+
+    <!-- Sliding Drawer -->
+    <div id="menu" class="mobile-menu">
+        <div class="flex flex-col h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-lg font-bold">Menu</span>
+                <button onclick="toggleMenu()" class="text-2xl">×</button>
+            </div>
+            
+            <!-- Menu Items -->
+            <div class="flex-1 overflow-y-auto p-4">
+                <nav class="space-y-2">
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Services</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">SaaS</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Websites</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Marketing</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Tools</a>
+                    <a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Contact us</a>
+                </nav>
+                
+                <div class="mt-6 space-y-3 border-t pt-4">
+                    <button class="w-full px-4 py-3 rounded-full bg-gray-100">🇧🇩 বাংলা</button>
+                    <button class="w-full px-4 py-3 rounded-full bg-gray-100 text-orange-500">Sign in</button>
+                    <button class="w-full px-4 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 text-white font-bold">Book a Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-8">
+        <h1 class="text-3xl font-bold mb-4">Testing Sliding Drawer Menu</h1>
+        <p class="text-gray-600">Click the menu button to see the sliding drawer animation from the right side.</p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const overlay = document.getElementById('overlay');
+            menu.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        // Close on overlay click
+        document.getElementById('overlay').addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>

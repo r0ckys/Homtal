@@ -1,0 +1,130 @@
+<!-- THIS IS THE NEW CONTACT FORM TO REPLACE IN index (3).html -->
+<!-- Replace from "<!-- Functional Contact Form -->" to before "<!-- Footer -->" -->
+
+        <!-- Functional Contact Form -->
+        <div class="bg-gradient-to-br from-white/[0.14] to-white/[0.06] lg:bg-white rounded-[40px] shadow-2xl overflow-hidden border-2 border-white lg:border-none" style="backdrop-filter: blur(20px);">
+          <div class="p-8 lg:p-12">
+            <!-- Form -->
+            <form class="space-y-10 mb-16" onsubmit="event.preventDefault(); alert('Message sent! We will contact you soon.')">
+              <!-- Name/Organization Field -->
+              <div>
+                <label class="block text-base font-medium text-white lg:text-gray-700 mb-2" style="font-family: Inter; line-height: 20px;">Name / Organization</label>
+                <input type="text" placeholder="" class="w-full px-0 py-3 bg-transparent border-b border-white lg:border-gray-300 focus:border-orange-500 lg:focus:border-[#FF6B01] outline-none transition text-base text-white lg:text-black" style="font-family: Inter;" />
+              </div>
+
+              <!-- Email and Phone Number Fields -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+                <div>
+                  <label class="block text-base font-medium text-white lg:text-gray-700 mb-2" style="font-family: Inter; line-height: 20px;">Email</label>
+                  <input type="email" placeholder="" class="w-full px-0 py-3 bg-transparent border-b border-white lg:border-gray-300 focus:border-orange-500 lg:focus:border-[#FF6B01] outline-none transition text-base text-white lg:text-black" style="font-family: Inter;" />
+                </div>
+                <div>
+                  <label class="block text-base font-medium text-white lg:text-gray-700 mb-2" style="font-family: Inter; line-height: 20px;">Phone Number</label>
+                  <input type="tel" placeholder="+XXX XXXX-XXXXXX" class="w-full px-0 py-3 bg-transparent border-b border-white lg:border-gray-300 focus:border-orange-500 lg:focus:border-[#FF6B01] outline-none transition text-sm text-[#494949] lg:text-black placeholder-[#494949] lg:placeholder-gray-400" style="font-family: Inter; line-height: 20px;" />
+                </div>
+              </div>
+
+              <!-- Select Subject -->
+              <div>
+                <label class="block text-base font-semibold text-white lg:text-gray-700 mb-4" style="font-family: Inter; line-height: 20px;">Select Subject?</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-[13.24px] h-[13.24px] bg-white lg:bg-gray-300 rounded-sm"></div>
+                    <span class="text-[15px] text-white lg:text-gray-700" style="font-family: Inter; font-weight: 400; line-height: 20px;">Saas</span>
+                  </label>
+                  <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-[13.24px] h-[13.24px] bg-white lg:bg-gray-300 rounded-sm"></div>
+                    <span class="text-[15px] text-white lg:text-gray-700" style="font-family: Inter; font-weight: 400; line-height: 20px;">Website</span>
+                  </label>
+                  <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-[13.24px] h-[13.24px] bg-white lg:bg-gray-300 rounded-sm"></div>
+                    <span class="text-[15px] text-white lg:text-gray-700" style="font-family: Inter; font-weight: 400; line-height: 20px;">Degital Marketing</span>
+                  </label>
+                  <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-[13px] h-[13.24px] bg-[#E0E0E0] lg:bg-gray-300 rounded-sm"></div>
+                    <span class="text-[14px] text-white lg:text-gray-700" style="font-family: Inter; font-weight: 400; line-height: 20px;">Others</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label class="block text-base font-medium text-white lg:text-gray-700 mb-2" style="font-family: Inter; line-height: 20px;">Message</label>
+                <textarea rows="5" placeholder="Write your message.." class="w-full px-4 py-3 bg-transparent lg:bg-transparent border border-white lg:border-gray-300 focus:border-orange-500 lg:focus:border-[#FF6B01] outline-none transition resize-none text-base text-white lg:text-black rounded-lg lg:rounded placeholder-white/70 lg:placeholder-gray-400" style="font-family: Inter; font-size: 13px; line-height: 20px; font-weight: 500;"></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="flex justify-end pt-4">
+                <button type="submit" class="px-12 py-4 rounded-md bg-white/10 lg:bg-gradient-to-r lg:from-[#FF6B01] lg:to-[#FF9F1C] hover:bg-white/20 lg:hover:shadow-lg text-white text-lg font-medium transition" style="font-family: Inter; font-weight: 500; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.12);">
+                  Send Message
+                </button>
+              </div>
+            </form>
+
+            <!-- Contact Information Box -->
+            <div class="bg-black/[0.33] lg:bg-gradient-to-br lg:from-[#FF6B01] lg:to-[#FF9F1C] rounded-[30px] p-10 lg:p-12 text-white">
+              <h3 class="text-[28px] font-semibold mb-2" style="font-family: Poppins;">Contact Information</h3>
+              <p class="text-lg text-[#C9C9C9] lg:text-white mb-8" style="font-family: Poppins; font-weight: 400;">Say something to start a live chat!</p>
+
+              <div class="space-y-8 mb-12">
+                <div class="flex items-center gap-6">
+                  <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                  </svg>
+                  <a href="tel:+8801410050041" class="text-base hover:underline" style="font-family: Poppins; font-weight: 400;">+88 0141-0050041</a>
+                </div>
+
+                <div class="flex items-center gap-6">
+                  <svg class="w-[21px] h-[21px] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                  </svg>
+                  <a href="https://wa.me/8801410050031" target="_blank" class="text-base hover:underline" style="font-family: Poppins; font-weight: 400;">+88 0141-0050031</a>
+                </div>
+
+                <div class="flex items-center gap-6">
+                  <img class="w-6 h-6 flex-shrink-0" src="https://hdnfltv.com/image/nitimages/fluent_person-support-24-filled__2_.webp" alt="Icon">
+                  
+                  <a href="tel:09617510520" class="text-base hover:underline" style="font-family: Poppins; font-weight: 400;">09617 510 520</a>
+                </div>
+
+                <div class="flex items-center gap-6">
+                  <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                  </svg>
+                  <a href="mailto:info@systemnextit.com" class="text-base hover:underline" style="font-family: Poppins; font-weight: 400;">info@systemnextit.com</a>
+                </div>
+
+                <div class="flex items-start gap-6">
+                  <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-base leading-relaxed" style="font-family: Poppins; font-weight: 400;">D-14/3, Bank Colony, Savar, Dhaka-1340</span>
+                </div>
+              </div>
+
+              <!-- Social Icons -->
+              <div class="flex gap-6">
+                <a href="#" class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] lg:bg-white/20 hover:bg-white/10 lg:hover:bg-white/30 flex items-center justify-center transition">
+                  <svg class="w-[8.17px] h-[15.75px]" fill="white" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] lg:bg-white/20 hover:bg-white/10 lg:hover:bg-white/30 flex items-center justify-center transition">
+                  <div class="w-[15px] h-[15px] bg-white"></div>
+                </a>
+                <a href="#" class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] lg:bg-white/20 hover:bg-white/10 lg:hover:bg-white/30 flex items-center justify-center transition">
+                  <svg class="w-4 h-4" fill="white" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-[30px] h-[30px] rounded-full bg-[#1B1B1B] lg:bg-white/20 hover:bg-white/10 lg:hover:bg-white/30 flex items-center justify-center transition">
+                  <svg class="w-[13.20px] h-[13.33px]" fill="white" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.441 16.892c-2.102.144-6.784.144-8.883 0C5.282 16.736 5.017 15.622 5 12c.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0C18.718 7.264 18.982 8.378 19 12c-.018 3.629-.285 4.736-2.559 4.892zM10 9.658l4.917 2.338L10 14.342V9.658z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
