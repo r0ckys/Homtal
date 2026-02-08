@@ -460,23 +460,415 @@
                                                                         // Language Toggle
                                                                         let currentLanguage = 'en'; // en for English (default), bn for Bangla
 
-                                                                        // Initialize Google Translate
-                                                                        function googleTranslateElementInit() {
-                                                                          new google.translate.TranslateElement({
-                                                                            pageLanguage: 'en',
-                                                                            includedLanguages: 'en,bn',
-                                                                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                                                                            autoDisplay: false
-                                                                          }, 'google_translate_element');
-                                                                        }
+                                                                          // Translations Content Object - Edit Bangla translations here
+                                                                          const translations = {
+                                                                            en: {
+                                                                              // Navigation
+                                                                              nav: {
+                                                                                services: "Services",
+                                                                                saas: "SaaS",
+                                                                                websites: "Websites",
+                                                                                marketing: "Marketing",
+                                                                                tools: "Tools",
+                                                                                contactUs: "Contact us",
+                                                                                signIn: "Sign in",
+                                                                                bookCall: "Book a Call",
+                                                                                language: "English"
+                                                                              },
+                                                                              // Hero Section
+                                                                              hero: {
+                                                                                tagline: "FROM IDEA TO ONLINE SUCCESS",
+                                                                                title: "Complete Digital",
+                                                                                titleHighlight: "Solutions",
+                                                                                description: "Accelerate your business growth with modern, scalable, and result-driven digital solutions.",
+                                                                                getAppointment: "Get Appointment",
+                                                                                howItWorks: "How it works"
+                                                                              },
+                                                                              // Website Showcase
+                                                                              showcase: {
+                                                                                title: "Create an Online Store Today",
+                                                                                description: "Innovative web development and digital marketing strategies to scale your business.",
+                                                                                viewWebsite: "View Website",
+                                                                                buildWebsite: "Build a Website"
+                                                                              },
+                                                                              // Business Features
+                                                                              features: {
+                                                                                title: "Support for essential Business features",
+                                                                                integrated: "INTEGRATED SYSTEM",
+                                                                                cashFlow: "MONITORED CASH FLOW",
+                                                                                inventory: "INVENTORY MANAGEMENT"
+                                                                              },
+                                                                              // Steps Section
+                                                                              steps: {
+                                                                                sectionTitle: "Simple Steps to Make Your Website Live",
+                                                                                step1Title: "Create an Account",
+                                                                                step1Desc: "Sign up to launch your online store and access powerful tools to grow your business",
+                                                                                step2Title: "Set Up Your Store",
+                                                                                step2Desc: "Add your store name, select your country and category to launch in minutes.",
+                                                                                step3Title: "Add Products",
+                                                                                step3Desc: "Start selling by adding your product. Enter product details like name, price and photos to showcase what you're offering.",
+                                                                                createShop: "Create Shop"
+                                                                              },
+                                                                              // SaaS Features
+                                                                              saasSection: {
+                                                                                tagline: "Create Your Shop",
+                                                                                title: "Smart automation and Ready-to-launch business websites",
+                                                                                features: [
+                                                                                  "Next.js (JavaScript)-Build Website",
+                                                                                  "Free Sub-Domain",
+                                                                                  "Super fast VPS Hosting",
+                                                                                  "User Friendly Dashboard",
+                                                                                  "Unlimited Product Upload",
+                                                                                  "Order Management",
+                                                                                  "Live Chat Integrated",
+                                                                                  "Quick Notification Enable",
+                                                                                  "AI integrated (SN Intelligence)",
+                                                                                  "Initial Load Time 0.2 sec",
+                                                                                  "SSL & Security",
+                                                                                  "Mobile First Approach",
+                                                                                  "Facebook Pixel Integration",
+                                                                                  "Product Analytics",
+                                                                                  "Inventory Management",
+                                                                                  "Delivery Assistant Integrated",
+                                                                                  "24/7 Support",
+                                                                                  "Money Back Guaranteed"
+                                                                                ],
+                                                                                price: "500",
+                                                                                perMonth: "/Month",
+                                                                                getStarted: "Get Started Free"
+                                                                              },
+                                                                              // Pricing Section
+                                                                              pricing: {
+                                                                                readyWebsite: "Ready Website",
+                                                                                readyDesc: "Instant eCommerce with full management.",
+                                                                                customWebsite: "Custom Website",
+                                                                                customDesc: "Your vision. Our code. Full control.",
+                                                                                sourceCode: "Website With Source Code",
+                                                                                sourceDesc: "Your hosting or our managed servers.",
+                                                                                startingFrom: "Starting From",
+                                                                                hostingNote: "Hosting charges will add on your storage requirements.",
+                                                                                contactUs: "Contact Us"
+                                                                              },
+                                                                              // Marketing Section
+                                                                              marketing: {
+                                                                                tagline: "Boost Your Sales",
+                                                                                description: "Maximize Your Global Reach and Strategically Multiply Your Business Revenue.",
+                                                                                facebook: "Facebook Marketing",
+                                                                                facebookDesc: "Proven strategies to boost your online sales.",
+                                                                                seo: "SEO",
+                                                                                seoDesc: "Better rankings. More traffic. Higher revenue.",
+                                                                                contract: "Contract Basis",
+                                                                                contractDesc: "Grow your business with long-term organic growth.",
+                                                                                getAppointment: "Get Appointment"
+                                                                              },
+                                                                              // Services & Technologies
+                                                                              techSection: {
+                                                                                title: "Services & Technologies",
+                                                                                description: "Innovative web development and digital marketing strategies to scale your business.",
+                                                                                web: "Web",
+                                                                                webDesc: "Professional web development using modern frameworks like Next.js and React.",
+                                                                                ecommerce: "E-commerce",
+                                                                                ecommerceDesc: "Secure eCommerce stores with smooth checkout and high conversions.",
+                                                                                app: "App",
+                                                                                appDesc: "Build cross-platform mobile apps with smooth performance.",
+                                                                                interface: "Interface Design",
+                                                                                interfaceDesc: "Engaging and intuitive interface design for better user experience.",
+                                                                                brand: "Brand Identity",
+                                                                                brandDesc: "Creating a unique brand voice and visual identity that stands out.",
+                                                                                social: "Social Media",
+                                                                                socialDesc: "Grow your presence with strategic SEO and marketing campaigns.",
+                                                                                saas: "SaaS",
+                                                                                saasDesc: "Create professional E-commerce websites instantly without any coding.",
+                                                                                maintenance: "Maintenance",
+                                                                                maintenanceDesc: "24/7 support to keep your apps secure, updated, and running smoothly.",
+                                                                                requestMeeting: "Request for Meeting"
+                                                                              },
+                                                                              // Sister Concerns
+                                                                              sister: {
+                                                                                title: "Our Sister Concerns",
+                                                                                subtitle: "A venture of SystemNext IT"
+                                                                              },
+                                                                              // Contact Section
+                                                                              contact: {
+                                                                                title: "Contact Us",
+                                                                                subtitle: "Any question or remarks? Just write us a message!",
+                                                                                infoTitle: "Contact Information",
+                                                                                infoSubtitle: "Say something to start a live chat!",
+                                                                                nameLabel: "Name / Organization",
+                                                                                emailLabel: "Email",
+                                                                                phoneLabel: "Phone Number",
+                                                                                subjectLabel: "Select Subject?",
+                                                                                subjects: {
+                                                                                  saas: "Saas",
+                                                                                  website: "Website",
+                                                                                  marketing: "Digital Marketing",
+                                                                                  others: "Others"
+                                                                                },
+                                                                                messageLabel: "Message",
+                                                                                messagePlaceholder: "Write your message..",
+                                                                                sendButton: "Send Message"
+                                                                              },
+                                                                              // Footer
+                                                                              footer: {
+                                                                                company: "Company",
+                                                                                about: "About",
+                                                                                portfolio: "Portfolio",
+                                                                                services: "Services",
+                                                                                legal: "Legal",
+                                                                                privacy: "Privacy Policy",
+                                                                                terms: "Terms of Use",
+                                                                                refund: "Refund Policy",
+                                                                                quickLinks: "Quick Links",
+                                                                                saasSubscription: "SaaS Subscription",
+                                                                                websiteBuilding: "Website Building",
+                                                                                serviceTech: "Service & Technology",
+                                                                                newsletter: "Join Our Newsletter",
+                                                                                emailPlaceholder: "Your email address",
+                                                                                subscribe: "Subscribe",
+                                                                                newsletterNote: "* Will send you frequently updates for your better tool management.",
+                                                                                copyright: "Copyright © 2026 System Next IT",
+                                                                                rights: "All security rights reserved."
+                                                                              },
+                                                                              // Video Popup
+                                                                              popup: {
+                                                                                title: "VIDEO COMING SOON",
+                                                                                description: "We're preparing an exclusive video to help you understand how our services can transform your business.",
+                                                                                countdown: "Get ready in:",
+                                                                                days: "Days",
+                                                                                hours: "Hours",
+                                                                                minutes: "Minutes",
+                                                                                seconds: "Seconds",
+                                                                                notify: "Notify me when it's ready",
+                                                                                stayTuned: "Stay tuned for something amazing!"
+                                                                              },
+                                                                              // Booking Modal
+                                                                              booking: {
+                                                                                requestCall: "Requests a Call",
+                                                                                bookAppointment: "Book an Appointment",
+                                                                                nameLabel: "Name*",
+                                                                                namePlaceholder: "Enter Your Name.....",
+                                                                                numberLabel: "Number*",
+                                                                                numberPlaceholder: "Enter your Number.....",
+                                                                                submit: "Submit"
+                                                                              }
+                                                                            },
+                                                                            bn: {
+                                                                              // Navigation - বাংলা
+                                                                              nav: {
+                                                                                services: "সেবাসমূহ",
+                                                                                saas: "সাস",
+                                                                                websites: "ওয়েবসাইট",
+                                                                                marketing: "মার্কেটিং",
+                                                                                tools: "টুলস",
+                                                                                contactUs: "যোগাযোগ",
+                                                                                signIn: "সাইন ইন",
+                                                                                bookCall: "কল বুক করুন",
+                                                                                language: "বাংলা"
+                                                                              },
+                                                                              // Hero Section - বাংলা
+                                                                              hero: {
+                                                                                tagline: "আইডিয়া থেকে অনলাইন সাফল্য",
+                                                                                title: "সম্পূর্ণ ডিজিটাল",
+                                                                                titleHighlight: "সমাধান",
+                                                                                description: "আধুনিক, স্কেলেবল এবং ফলাফল-চালিত ডিজিটাল সমাধান দিয়ে আপনার ব্যবসার বৃদ্ধি ত্বরান্বিত করুন।",
+                                                                                getAppointment: "অ্যাপয়েন্টমেন্ট নিন",
+                                                                                howItWorks: "কিভাবে কাজ করে"
+                                                                              },
+                                                                              // Website Showcase - বাংলা
+                                                                              showcase: {
+                                                                                title: "আজই একটি অনলাইন স্টোর তৈরি করুন",
+                                                                                description: "আপনার ব্যবসা স্কেল করতে উদ্ভাবনী ওয়েব ডেভেলপমেন্ট এবং ডিজিটাল মার্কেটিং কৌশল।",
+                                                                                viewWebsite: "ওয়েবসাইট দেখুন",
+                                                                                buildWebsite: "ওয়েবসাইট তৈরি করুন"
+                                                                              },
+                                                                              // Business Features - বাংলা
+                                                                              features: {
+                                                                                title: "প্রয়োজনীয় ব্যবসায়িক বৈশিষ্ট্যগুলির জন্য সমর্থন",
+                                                                                integrated: "ইন্টিগ্রেটেড সিস্টেম",
+                                                                                cashFlow: "মনিটরড ক্যাশ ফ্লো",
+                                                                                inventory: "ইনভেন্টরি ম্যানেজমেন্ট"
+                                                                              },
+                                                                              // Steps Section - বাংলা
+                                                                              steps: {
+                                                                                sectionTitle: "আপনার ওয়েবসাইট লাইভ করার সহজ ধাপ",
+                                                                                step1Title: "একাউন্ট তৈরি করুন",
+                                                                                step1Desc: "আপনার অনলাইন স্টোর চালু করতে এবং আপনার ব্যবসা বাড়াতে শক্তিশালী টুলস অ্যাক্সেস করতে সাইন আপ করুন",
+                                                                                step2Title: "আপনার স্টোর সেটআপ করুন",
+                                                                                step2Desc: "আপনার স্টোরের নাম যোগ করুন, আপনার দেশ এবং ক্যাটাগরি নির্বাচন করুন এবং মিনিটের মধ্যে লঞ্চ করুন।",
+                                                                                step3Title: "পণ্য যোগ করুন",
+                                                                                step3Desc: "আপনার পণ্য যোগ করে বিক্রি শুরু করুন। আপনি কী অফার করছেন তা প্রদর্শন করতে নাম, মূল্য এবং ফটো সহ পণ্যের বিবরণ লিখুন।",
+                                                                                createShop: "শপ তৈরি করুন"
+                                                                              },
+                                                                              // SaaS Features - বাংলা
+                                                                              saasSection: {
+                                                                                tagline: "আপনার শপ তৈরি করুন",
+                                                                                title: "স্মার্ট অটোমেশন এবং রেডি-টু-লঞ্চ ব্যবসায়িক ওয়েবসাইট",
+                                                                                features: [
+                                                                                  "Next.js (জাভাস্ক্রিপ্ট)-বিল্ড ওয়েবসাইট",
+                                                                                  "ফ্রি সাব-ডোমেইন",
+                                                                                  "সুপার ফাস্ট VPS হোস্টিং",
+                                                                                  "ইউজার ফ্রেন্ডলি ড্যাশবোর্ড",
+                                                                                  "আনলিমিটেড পণ্য আপলোড",
+                                                                                  "অর্ডার ম্যানেজমেন্ট",
+                                                                                  "লাইভ চ্যাট ইন্টিগ্রেটেড",
+                                                                                  "কুইক নোটিফিকেশন এনাবল",
+                                                                                  "AI ইন্টিগ্রেটেড (SN ইন্টেলিজেন্স)",
+                                                                                  "ইনিশিয়াল লোড টাইম ০.২ সেকেন্ড",
+                                                                                  "SSL ও সিকিউরিটি",
+                                                                                  "মোবাইল ফার্স্ট অ্যাপ্রোচ",
+                                                                                  "ফেসবুক পিক্সেল ইন্টিগ্রেশন",
+                                                                                  "প্রোডাক্ট অ্যানালিটিক্স",
+                                                                                  "ইনভেন্টরি ম্যানেজমেন্ট",
+                                                                                  "ডেলিভারি অ্যাসিস্ট্যান্ট ইন্টিগ্রেটেড",
+                                                                                  "২৪/৭ সাপোর্ট",
+                                                                                  "মানি ব্যাক গ্যারান্টিড"
+                                                                                ],
+                                                                                price: "৫০০",
+                                                                                perMonth: "/মাস",
+                                                                                getStarted: "বিনামূল্যে শুরু করুন"
+                                                                              },
+                                                                              // Pricing Section - বাংলা
+                                                                              pricing: {
+                                                                                readyWebsite: "রেডি ওয়েবসাইট",
+                                                                                readyDesc: "সম্পূর্ণ ম্যানেজমেন্ট সহ তাৎক্ষণিক ই-কমার্স।",
+                                                                                customWebsite: "কাস্টম ওয়েবসাইট",
+                                                                                customDesc: "আপনার ভিশন। আমাদের কোড। সম্পূর্ণ নিয়ন্ত্রণ।",
+                                                                                sourceCode: "সোর্স কোড সহ ওয়েবসাইট",
+                                                                                sourceDesc: "আপনার হোস্টিং বা আমাদের ম্যানেজড সার্ভার।",
+                                                                                startingFrom: "শুরু হচ্ছে",
+                                                                                hostingNote: "আপনার স্টোরেজ প্রয়োজনীয়তায় হোস্টিং চার্জ যোগ হবে।",
+                                                                                contactUs: "যোগাযোগ করুন"
+                                                                              },
+                                                                              // Marketing Section - বাংলা
+                                                                              marketing: {
+                                                                                tagline: "আপনার বিক্রয় বাড়ান",
+                                                                                description: "আপনার গ্লোবাল রিচ সর্বাধিক করুন এবং কৌশলগতভাবে আপনার ব্যবসার রাজস্ব বহুগুণ করুন।",
+                                                                                facebook: "ফেসবুক মার্কেটিং",
+                                                                                facebookDesc: "আপনার অনলাইন বিক্রয় বাড়াতে প্রমাণিত কৌশল।",
+                                                                                seo: "এসইও",
+                                                                                seoDesc: "ভালো র‍্যাঙ্কিং। বেশি ট্রাফিক। উচ্চ রাজস্ব।",
+                                                                                contract: "কন্ট্রাক্ট বেসিস",
+                                                                                contractDesc: "দীর্ঘমেয়াদী অর্গানিক গ্রোথ দিয়ে আপনার ব্যবসা বাড়ান।",
+                                                                                getAppointment: "অ্যাপয়েন্টমেন্ট নিন"
+                                                                              },
+                                                                              // Services & Technologies - বাংলা
+                                                                              techSection: {
+                                                                                title: "সেবা ও প্রযুক্তি",
+                                                                                description: "আপনার ব্যবসা স্কেল করতে উদ্ভাবনী ওয়েব ডেভেলপমেন্ট এবং ডিজিটাল মার্কেটিং কৌশল।",
+                                                                                web: "ওয়েব",
+                                                                                webDesc: "Next.js এবং React-এর মতো আধুনিক ফ্রেমওয়ার্ক ব্যবহার করে পেশাদার ওয়েব ডেভেলপমেন্ট।",
+                                                                                ecommerce: "ই-কমার্স",
+                                                                                ecommerceDesc: "স্মুথ চেকআউট এবং উচ্চ কনভার্সন সহ নিরাপদ ই-কমার্স স্টোর।",
+                                                                                app: "অ্যাপ",
+                                                                                appDesc: "স্মুথ পারফরম্যান্স সহ ক্রস-প্ল্যাটফর্ম মোবাইল অ্যাপ তৈরি করুন।",
+                                                                                interface: "ইন্টারফেস ডিজাইন",
+                                                                                interfaceDesc: "ভালো ইউজার এক্সপেরিয়েন্সের জন্য আকর্ষণীয় এবং সহজবোধ্য ইন্টারফেস ডিজাইন।",
+                                                                                brand: "ব্র্যান্ড আইডেন্টিটি",
+                                                                                brandDesc: "একটি অনন্য ব্র্যান্ড ভয়েস এবং ভিজ্যুয়াল আইডেন্টিটি তৈরি করা যা আলাদা।",
+                                                                                social: "সোশ্যাল মিডিয়া",
+                                                                                socialDesc: "কৌশলগত SEO এবং মার্কেটিং ক্যাম্পেইন দিয়ে আপনার উপস্থিতি বাড়ান।",
+                                                                                saas: "সাস",
+                                                                                saasDesc: "কোনো কোডিং ছাড়াই তাৎক্ষণিকভাবে পেশাদার ই-কমার্স ওয়েবসাইট তৈরি করুন।",
+                                                                                maintenance: "মেইন্টেন্যান্স",
+                                                                                maintenanceDesc: "আপনার অ্যাপস সুরক্ষিত, আপডেটেড এবং স্মুথভাবে চালু রাখতে ২৪/৭ সাপোর্ট।",
+                                                                                requestMeeting: "মিটিংয়ের জন্য অনুরোধ"
+                                                                              },
+                                                                              // Sister Concerns - বাংলা
+                                                                              sister: {
+                                                                                title: "আমাদের সিস্টার কনসার্ন",
+                                                                                subtitle: "সিস্টেমনেক্সট আইটি-এর একটি উদ্যোগ"
+                                                                              },
+                                                                              // Contact Section - বাংলা
+                                                                              contact: {
+                                                                                title: "যোগাযোগ করুন",
+                                                                                subtitle: "কোন প্রশ্ন বা মন্তব্য? শুধু আমাদের একটি মেসেজ লিখুন!",
+                                                                                infoTitle: "যোগাযোগের তথ্য",
+                                                                                infoSubtitle: "লাইভ চ্যাট শুরু করতে কিছু বলুন!",
+                                                                                nameLabel: "নাম / প্রতিষ্ঠান",
+                                                                                emailLabel: "ইমেইল",
+                                                                                phoneLabel: "ফোন নম্বর",
+                                                                                subjectLabel: "বিষয় নির্বাচন করুন?",
+                                                                                subjects: {
+                                                                                  saas: "সাস",
+                                                                                  website: "ওয়েবসাইট",
+                                                                                  marketing: "ডিজিটাল মার্কেটিং",
+                                                                                  others: "অন্যান্য"
+                                                                                },
+                                                                                messageLabel: "মেসেজ",
+                                                                                messagePlaceholder: "আপনার মেসেজ লিখুন..",
+                                                                                sendButton: "মেসেজ পাঠান"
+                                                                              },
+                                                                              // Footer - বাংলা
+                                                                              footer: {
+                                                                                company: "কোম্পানি",
+                                                                                about: "সম্পর্কে",
+                                                                                portfolio: "পোর্টফোলিও",
+                                                                                services: "সেবাসমূহ",
+                                                                                legal: "আইনি",
+                                                                                privacy: "প্রাইভেসি পলিসি",
+                                                                                terms: "ব্যবহারের শর্তাবলী",
+                                                                                refund: "রিফান্ড পলিসি",
+                                                                                quickLinks: "কুইক লিংক",
+                                                                                saasSubscription: "সাস সাবস্ক্রিপশন",
+                                                                                websiteBuilding: "ওয়েবসাইট বিল্ডিং",
+                                                                                serviceTech: "সার্ভিস ও টেকনোলজি",
+                                                                                newsletter: "আমাদের নিউজলেটারে যোগ দিন",
+                                                                                emailPlaceholder: "আপনার ইমেইল ঠিকানা",
+                                                                                subscribe: "সাবস্ক্রাইব",
+                                                                                newsletterNote: "* আপনার আরও ভালো টুল ম্যানেজমেন্টের জন্য নিয়মিত আপডেট পাঠাব।",
+                                                                                copyright: "কপিরাইট © ২০২৬ সিস্টেম নেক্সট আইটি",
+                                                                                rights: "সমস্ত নিরাপত্তা অধিকার সংরক্ষিত।"
+                                                                              },
+                                                                              // Video Popup - বাংলা
+                                                                              popup: {
+                                                                                title: "ভিডিও শীঘ্রই আসছে",
+                                                                                description: "আমাদের সেবা কীভাবে আপনার ব্যবসাকে রূপান্তরিত করতে পারে তা বুঝতে সাহায্য করার জন্য আমরা একটি এক্সক্লুসিভ ভিডিও প্রস্তুত করছি।",
+                                                                                countdown: "প্রস্তুত হচ্ছে:",
+                                                                                days: "দিন",
+                                                                                hours: "ঘন্টা",
+                                                                                minutes: "মিনিট",
+                                                                                seconds: "সেকেন্ড",
+                                                                                notify: "প্রস্তুত হলে আমাকে জানান",
+                                                                                stayTuned: "অসাধারণ কিছুর জন্য সাথে থাকুন!"
+                                                                              },
+                                                                              // Booking Modal - বাংলা
+                                                                              booking: {
+                                                                                requestCall: "একটি কল অনুরোধ",
+                                                                                bookAppointment: "একটি অ্যাপয়েন্টমেন্ট বুক করুন",
+                                                                                nameLabel: "নাম*",
+                                                                                namePlaceholder: "আপনার নাম লিখুন.....",
+                                                                                numberLabel: "নম্বর*",
+                                                                                numberPlaceholder: "আপনার নম্বর লিখুন.....",
+                                                                                submit: "জমা দিন"
+                                                                              }
+                                                                            }
+                                                                          };
 
-                                                                        // Function to change language programmatically
-                                                                        function changeLanguage(lang) {
-                                                                          const selectField = document.querySelector('.goog-te-combo');
-                                                                          if (selectField) {
-                                                                            selectField.value = lang;
-                                                                            selectField.dispatchEvent(new Event('change'));
-                                                                          }
+                                                                          // Apply translations to all elements with data-translate attribute
+                                                                          function applyTranslations() {
+                                                                            const lang = currentLanguage;
+                                                                            const t = translations[lang];
+
+                                                                          document.querySelectorAll('[data-translate]').forEach(el => {
+                                                                            const key = el.getAttribute('data-translate');
+                                                                            const keys = key.split('.');
+                                                                            let value = t;
+                                                                            for (const k of keys) {
+                                                                              if (value && value[k] !== undefined) {
+                                                                                value = value[k];
+                                                                              } else {
+                                                                                value = null;
+                                                                                break;
+                                                                              }
+                                                                            }
+                                                                            if (value !== null) {
+                                                                              if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                                                                                if (el.placeholder) el.placeholder = value;
+                                                                              } else {
+                                                                                el.textContent = value;
+                                                                              }
+                                                                            }
+                                                                          });
                                                                         }
 
                                                                         function toggleLanguage() {
@@ -484,7 +876,6 @@
                                                                           const langToggleMobile = document.getElementById('langToggleMobile');
 
                                                                           if (currentLanguage === 'en') {
-                                                                            // Switch to Bangla
                                                                             currentLanguage = 'bn';
                                                                             if (langToggleDesktop) {
                                                                               langToggleDesktop.querySelector('span').textContent = 'বাংলা';
@@ -492,10 +883,7 @@
                                                                             if (langToggleMobile) {
                                                                               langToggleMobile.querySelector('span').textContent = 'বাংলা';
                                                                             }
-                                                                            // Wait for Google Translate to be ready
-                                                                            setTimeout(() => changeLanguage('bn'), 100);
                                                                           } else {
-                                                                            // Switch to English
                                                                             currentLanguage = 'en';
                                                                             if (langToggleDesktop) {
                                                                               langToggleDesktop.querySelector('span').textContent = 'English';
@@ -503,9 +891,8 @@
                                                                             if (langToggleMobile) {
                                                                               langToggleMobile.querySelector('span').textContent = 'English';
                                                                             }
-                                                                            // Wait for Google Translate to be ready
-                                                                            setTimeout(() => changeLanguage('en'), 100);
                                                                           }
+                                                                          applyTranslations();
                                                                         }
 
                                                                         // Toggle Contact Menu
@@ -876,19 +1263,19 @@
             <button onclick="scrollToSection('services')"
               class="flex items-center gap-0.5 px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition"
               aria-label="Services menu">
-              <span class="text-[#1a1a1a] text-sm xl:text-base font-medium">Services</span>
+              <span class="text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.services">Services</span>
               <img class="w-4 h-4" src="https://c.animaapp.com/MnwsBUVG/img/expand-more.svg" alt="" />
             </button>
             <button onclick="scrollToSection('saas')"
-              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">SaaS</button>
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.saas">SaaS</button>
             <button onclick="scrollToSection('websites')"
-              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Websites</button>
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.websites">Websites</button>
             <button onclick="scrollToSection('marketing')"
-              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Marketing</button>
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.marketing">Marketing</button>
             <button onclick="scrollToSection('tools')"
-              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Tools</button>
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.tools">Tools</button>
             <button onclick="scrollToSection('contact')"
-              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium">Contact
+              class="px-3 xl:px-4 py-2 rounded-lg hover:bg-gray-100 transition text-[#1a1a1a] text-sm xl:text-base font-medium" data-translate="nav.contactUs">Contact
               us</button>
           </div>
 
@@ -900,8 +1287,12 @@
               <img class="w-6 h-6 lg:w-8 lg:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
               <span class="text-[#ff6f03] text-sm lg:text-base font-medium">English</span>
             </button>
-            <button class="px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-sm lg:text-base font-medium">Sign in</button>
-            <button onclick="openBookingModal()" class="px-4 lg:px-6 py-2 lg:py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-xs lg:text-sm font-bold hover:shadow-lg transition">Book a Call</button>
+            <button
+              class="px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-sm lg:text-base font-medium"
+              data-translate="nav.signIn">Sign in</button>
+            <button onclick="openBookingModal()"
+              class="px-4 lg:px-6 py-2 lg:py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-xs lg:text-sm font-bold hover:shadow-lg transition"
+              data-translate="nav.bookCall">Book a Call</button>
           </div>
 
           <!-- Mobile/Tablet CTA Button -->
@@ -985,19 +1376,22 @@
 
       <!-- Hero Content -->
       <div class="relative max-w-[1152px] mx-auto px-4 pt-10 md:pt-20 text-center">
-        <p class="text-[#ff9c1b] text-sm sm:text-[15px] font-semibold tracking-[0.5px] leading-5 mb-3 sm:mb-6 uppercase">FROM
+        <p class="text-[#ff9c1b] text-sm sm:text-[15px] font-semibold tracking-[0.5px] leading-5 mb-3 sm:mb-6 uppercase"
+          data-translate="hero.tagline">FROM
           IDEA TO ONLINE SUCCESS</p>
         <h1
           class="text-[32px] sm:text-5xl md:text-6xl lg:text-[64px] font-medium text-[#1a1a1a] mb-3 sm:mb-4 leading-[1.2] sm:leading-tight">
-          Complete Digital <span class="text-[#FF6B01]">Solutions</span>
+          <span data-translate="hero.title">Complete Digital</span> <span class="text-[#FF6B01]"
+            data-translate="hero.titleHighlight">Solutions</span>
         </h1>
-        <p class="text-[15px] sm:text-lg text-[#4a5568] mb-6 sm:mb-8 max-w-[900px] mx-auto leading-relaxed px-2">Accelerate your
+        <p class="text-[15px] sm:text-lg text-[#4a5568] mb-6 sm:mb-8 max-w-[900px] mx-auto leading-relaxed px-2"
+          data-translate="hero.description">Accelerate your
           business growth with modern, scalable, and result-driven digital solutions.</p>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-8 mb-2">
           <button onclick="openBookingModal()"
-            class="w-full sm:w-auto px-10 py-3.5 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base sm:text-base font-bold hover:shadow-lg transition">Get
+            class="w-full sm:w-auto px-10 py-3.5 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-base sm:text-base font-bold hover:shadow-lg transition" data-translate="hero.getAppointment">Get
             Appointment</button>
           <button onclick="showPopup()"
             class="flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:py-3 rounded-[99px] hover:bg-white/50 transition">
@@ -1008,7 +1402,7 @@
                 d="M13 11.891V21.109C13 21.8119 13.7547 22.239 14.3358 21.8564L21.3966 17.2474C21.9345 16.9004 21.9345 16.0996 21.3966 15.7437L14.3358 11.1436C13.7547 10.761 13 11.1881 13 11.891Z"
                 fill="#FF6F03" />
             </svg>
-            <span class="text-[#ff6f03] text-sm sm:text-base font-semibold">How it works</span>
+            <span class="text-[#ff6f03] text-sm sm:text-base font-semibold" data-translate="hero.howItWorks">How it works</span>
           </button>
         </div>
       </div>
@@ -1289,10 +1683,12 @@
             </div>
             <div class="bg-[#fff9f2] rounded-2xl p-5 sm:p-6 lg:p-5 xl:p-6 min-h-[160px] sm:min-h-[180px] lg:min-h-[168px] flex flex-col">
               <div class="flex justify-between items-start mb-3 sm:mb-4 gap-3">
-                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1">Create an Account</h3>
+                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1" data-translate="steps.step1Title">Create an Account
+                </h3>
                 <img class="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0" src="https://c.animaapp.com/MnwsBUVG/img/mdi-account-plus.svg" alt="" />
               </div>
-              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1">Sign up to launch your online store and access powerful tools to grow your business</p>
+              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1" data-translate="steps.step1Desc">Sign up to launch
+                your online store and access powerful tools to grow your business</p>
             </div>
           </div>
 
@@ -1303,10 +1699,12 @@
             </div>
             <div class="bg-[#fff9f2] rounded-2xl p-5 sm:p-6 lg:p-5 xl:p-6 min-h-[160px] sm:min-h-[180px] lg:min-h-[168px] flex flex-col">
               <div class="flex justify-between items-start mb-3 sm:mb-4 gap-3">
-                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1">Set Up Your Store</h3>
+                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1" data-translate="steps.step2Title">Set Up Your Store
+                </h3>
                 <img class="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0" src="https://c.animaapp.com/MnwsBUVG/img/streamline-plump-store-2-solid.svg" alt="" />
               </div>
-              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1">Add your store name, select your country and category to launch in minutes.</p>
+              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1" data-translate="steps.step2Desc">Add your store
+                name, select your country and category to launch in minutes.</p>
             </div>
           </div>
 
@@ -1317,17 +1715,20 @@
             </div>
             <div class="bg-[#fff9f2] rounded-2xl p-5 sm:p-6 lg:p-5 xl:p-6 min-h-[160px] sm:min-h-[180px] lg:min-h-[168px] flex flex-col">
               <div class="flex justify-between items-start mb-3 sm:mb-4 gap-3">
-                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1">Add Products</h3>
+                <h3 class="text-lg sm:text-xl font-semibold text-[#454452] flex-1" data-translate="steps.step3Title">Add Products</h3>
                 <img class="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0" src="https://c.animaapp.com/MnwsBUVG/img/frame-1000001880.svg" alt="" />
               </div>
-              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1">Start selling by adding your product. Enter product details like name, price and photos to showcase what you're offering.</p>
+              <p class="text-xs sm:text-sm text-[#454452] leading-relaxed flex-1" data-translate="steps.step3Desc">Start selling by
+                adding your product. Enter product details like name, price and photos to showcase what you're offering.</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="text-center px-4">
-        <button onclick="window.location.href='https://allinbangla.com/register'" class="w-full sm:w-auto px-8 sm:px-10 lg:px-12 py-3 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm sm:text-base font-bold hover:shadow-lg transition">
+        <button onclick="window.location.href='https://allinbangla.com/register'"
+          class="w-full sm:w-auto px-8 sm:px-10 lg:px-12 py-3 sm:py-3.5 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm sm:text-base font-bold hover:shadow-lg transition"
+          data-translate="steps.createShop">
           Create Shop
         </button>
       </div>
@@ -1337,8 +1738,9 @@
     <div id="saas"
       class="bg-gradient-to-b from-[#FF8800]/70 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16">
       <div class="max-w-[817px] mx-auto text-center mb-10 px-4">
-        <p class="text-sm font-medium text-[#2f1700] mb-3">Create Your Shop</p>
-        <h2 class="text-base font-normal text-[#2f1700]">Smart automation and Ready-to-launch business websites</h2>
+        <p class="text-sm font-medium text-[#2f1700] mb-3" data-translate="saasSection.tagline">Create Your Shop</p>
+        <h2 class="text-base font-normal text-[#2f1700]" data-translate="saasSection.title">Smart automation and Ready-to-launch
+          business websites</h2>
       </div>
 
       <div class="max-w-[1096px] mx-auto bg-white rounded-3xl p-6 md:p-12">
@@ -1633,8 +2035,9 @@
     <div id="marketing"
       class="bg-gradient-to-b from-[#D9FF1E]/60 to-transparent rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-16 mt-10 sm:mt-20">
       <div class="text-center mb-12">
-        <p class="text-sm font-medium text-[#002d5a] mb-8">Boost Your Sales</p>
-        <p class="text-base text-[#002d5a]">Maximize Your Global Reach and Strategically Multiply Your Business Revenue.</p>
+        <p class="text-sm font-medium text-[#002d5a] mb-8" data-translate="marketing.tagline">Boost Your Sales</p>
+        <p class="text-base text-[#002d5a]" data-translate="marketing.description">Maximize Your Global Reach and Strategically
+          Multiply Your Business Revenue.</p>
       </div>
 
       <div class="max-w-[1252px] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1741,8 +2144,10 @@
       class="bg-white rounded-t-[40px] sm:rounded-t-[100px] shadow-[0_12px_58.9px_rgba(0,0,0,0.27)] py-12 sm:py-20 mt-10 sm:mt-20">
       <div class="max-w-[1207px] mx-auto px-4">
         <div class="text-center mb-10 sm:mb-16">
-          <h2 class="text-3xl sm:text-5xl font-medium text-black mb-2">Services & Technologies</h2>
-          <p class="text-lg text-[#4e4e4e] font-medium">Innovative web development and digital marketing strategies to scale your business.</p>
+          <h2 class="text-3xl sm:text-5xl font-medium text-black mb-2" data-translate="techSection.title">Services & Technologies
+          </h2>
+          <p class="text-lg text-[#4e4e4e] font-medium" data-translate="techSection.description">Innovative web development and
+            digital marketing strategies to scale your business.</p>
         </div>
 
         <!-- Service Cards Grid -->
@@ -1829,8 +2234,8 @@
       <!-- Sister Concerns -->
       <div class="max-w-[1143px] mx-auto px-4 mt-32">
         <div class="text-center">
-          <h2 class="text-4xl font-bold text-black mb-2">Our Sister Concerns</h2>
-          <p class="text-lg font-medium text-[#707070] mb-16">A venture of SystemNext IT</p>
+          <h2 class="text-4xl font-bold text-black mb-2" data-translate="sister.title">Our Sister Concerns</h2>
+          <p class="text-lg font-medium text-[#707070] mb-16" data-translate="sister.subtitle">A venture of SystemNext IT</p>
 
           <div class="flex flex-col items-center gap-6">
             <div class="relative flex flex-col items-center">
@@ -1849,9 +2254,11 @@
       <!-- Contact Form -->
       <div class="max-w-[900px] mx-auto px-4 lg:px-4 relative z-10 pb-8 lg:pb-12">
         <div class="text-center mb-8 lg:mb-12 pt-8 lg:pt-12">
-          <h2 class="text-5xl lg:text-[56px] font-bold text-white mb-4" style="font-family: Poppins;">Contact Us
+          <h2 class="text-5xl lg:text-[56px] font-bold text-white mb-4" style="font-family: Poppins;"
+            data-translate="contact.title">Contact Us
           </h2>
-          <p class="text-xl lg:text-2xl font-medium text-[#D6D6D6]" style="font-family: Poppins;">Any
+          <p class="text-xl lg:text-2xl font-medium text-[#D6D6D6]" style="font-family: Poppins;"
+            data-translate="contact.subtitle">Any
             question or remarks? Just write us a message!</p>
         </div>
 
@@ -1863,8 +2270,10 @@
               <!-- Contact Information Box - Left Side -->
               <div
                 class="bg-[#1F1F1F] rounded-t-[38px] lg:rounded-t-[38px] lg:rounded-l-[38px] lg:rounded-tr-none px-8 lg:px-10 py-8 lg:py-10 text-white">
-                <h3 class="text-[24px] lg:text-[28px] font-semibold mb-2" style="font-family: Poppins;">Contact Information</h3>
-                <p class="text-base lg:text-lg text-[#C9C9C9] mb-8 lg:mb-12" style="font-family: Poppins; font-weight: 400;">Say
+                <h3 class="text-[24px] lg:text-[28px] font-semibold mb-2" style="font-family: Poppins;"
+                  data-translate="contact.infoTitle">Contact Information</h3>
+                <p class="text-base lg:text-lg text-[#C9C9C9] mb-8 lg:mb-12" style="font-family: Poppins; font-weight: 400;"
+                  data-translate="contact.infoSubtitle">Say
                   something to start a live chat!</p>
                 <div class="space-y-6 lg:space-y-8 mb-12 lg:mb-16">
                   <div class="flex items-center gap-4 lg:gap-6">
@@ -2032,68 +2441,74 @@
 
             <!-- Company -->
             <div>
-              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;"
+                data-translate="footer.company">
                 Company</h3>
               <ul class="space-y-3.5 lg:space-y-4">
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">About</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.about">About</a></li>
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Portfolio</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.portfolio">Portfolio</a></li>
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Services</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.services">Services</a></li>
               </ul>
             </div>
 
             <!-- Legal -->
             <div>
-              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;"
+                data-translate="footer.legal">
                 Legal</h3>
               <ul class="space-y-3.5 lg:space-y-4">
                 <li><a href="/terms-and-conditions" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Privacy Policy</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.privacy">Privacy Policy</a></li>
                 <li><a href="/terms-and-conditions" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Terms of Use</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.terms">Terms of Use</a></li>
                 <li><a href="/return-policy" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Refund Policy</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.refund">Refund Policy</a></li>
               </ul>
             </div>
 
             <!-- Quick Links -->
             <div>
-              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;">
+              <h3 class="text-lg lg:text-base font-semibold text-white mb-4 lg:mb-5" style="font-family: Poppins; line-height: 24px;"
+                data-translate="footer.quickLinks">
                 Quick Links
               </h3>
               <ul class="space-y-3.5 lg:space-y-4">
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">SaaS Subscription</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.saasSubscription">SaaS Subscription</a></li>
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Website Building</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.websiteBuilding">Website Building</a></li>
                 <li><a href="#" class="text-base lg:text-base text-white hover:text-gray-300"
-                    style="font-family: Poppins; font-weight: 400;">Service & Technology</a></li>
+                    style="font-family: Poppins; font-weight: 400;" data-translate="footer.serviceTech">Service & Technology</a></li>
               </ul>
             </div>
             <!-- Newsletter -->
             <div class="col-span-1 lg:col-span-1">
               <div class="bg-[#131313] rounded-[10px] p-6 lg:p-[22px_22px_18px_22px]">
                 <h3 class="text-lg lg:text-base font-semibold text-white mb-5 lg:mb-5"
-                  style="font-family: Poppins; line-height: 24px;">Join Our Newsletter</h3>
+                  style="font-family: Poppins; line-height: 24px;" data-translate="footer.newsletter">Join Our Newsletter</h3>
                 <div class="relative mb-4 lg:mb-4">
                   <input type="email" placeholder="Your email address"
                     class="w-full h-[50px] lg:h-[48px] bg-[#1E1E1E] text-white px-4 py-3 rounded text-sm lg:text-[12px] placeholder-[#616161] outline-none focus:ring-2 focus:ring-orange-400"
                     style="font-family: Poppins; font-weight: 400;" />
                   <button
                     class="absolute right-0 top-0 h-[50px] lg:h-[48px] px-8 lg:px-9 rounded-r bg-gradient-to-b from-[#FF6A00] to-[#FF9F1C] text-white text-sm font-semibold hover:shadow-lg transition"
-                    style="font-family: Poppins;">Subscribe</button>
+                    style="font-family: Poppins;" data-translate="footer.subscribe">Subscribe</button>
                 </div>
-                <p class="text-xs lg:text-[11px] text-white/50 leading-relaxed" style="font-family: Manrope; font-weight: 500;">* Will
+                <p class="text-xs lg:text-[11px] text-white/50 leading-relaxed" style="font-family: Manrope; font-weight: 500;"
+                  data-translate="footer.newsletterNote">* Will
                   send you frequently updates for your better tool management.</p>
               </div>
             </div>
           </div>
           
           <div class="border-t border-white/20 pt-6 lg:pt-6 mt-8 lg:mt-8 text-center">
-            <p class="text-sm lg:text-sm text-[#7F7F7F] leading-relaxed" style="font-family: Poppins; font-weight: 400;">Copyright
-              © 2026 System Next IT<br class="lg:hidden">All security rights reserved.</p>
+            <p class="text-sm lg:text-sm text-[#7F7F7F] leading-relaxed" style="font-family: Poppins; font-weight: 400;"><span
+                data-translate="footer.copyright">Copyright
+                © 2026 System Next IT</span><br class="lg:hidden"><span data-translate="footer.rights">All security rights
+                reserved.</span></p>
           </div>
         </div>
       </footer>
