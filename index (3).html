@@ -413,6 +413,186 @@
       .goog-te-gadget {
         display: none !important;
       }
+
+      /* Scroll Sequence Animation Styles */
+      .business-scroll-track {
+        height: 400vh;
+        position: relative;
+      }
+
+      .business-sticky-viewport {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .business-image-container {
+        position: relative;
+        width: 85%;
+        max-width: 1000px;
+        height: 70vh;
+        z-index: 10;
+        perspective: 2000px;
+      }
+
+      .business-scroll-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transform: translateZ(-800px) scale(0.4);
+        transition: 
+          opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+          transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          filter 0.8s ease;
+        filter: blur(20px);
+        z-index: 1;
+        will-change: transform, opacity, filter;
+      }
+
+      .business-scroll-image.active {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+        filter: blur(0px) brightness(1);
+        z-index: 2;
+      }
+
+      .business-scroll-image.exit {
+        opacity: 0;
+        transform: translateZ(600px) scale(1.4);
+        filter: blur(15px);
+        z-index: 3;
+      }
+
+      .business-badges-overlay {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 20;
+        pointer-events: none;
+      }
+
+      .business-badge-item {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        pointer-events: auto;
+      }
+
+      .business-badge-item.active {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .business-badge-item.right {
+        transform: translateX(50px);
+      }
+
+      .business-badge-item.right.active {
+        transform: translateX(0);
+      }
+
+      .business-progress-nav {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 100;
+      }
+
+      .business-nav-item {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ddd;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        border: 2px solid transparent;
+      }
+
+      .business-nav-item.active {
+        background: #FF6B01;
+        transform: scale(1.8);
+        box-shadow: 0 0 10px rgba(255, 107, 1, 0.3);
+      }
+
+      @media (max-width: 1024px) {
+        .business-image-container {
+          width: 90%;
+          height: 60vh;
+        }
+
+        .business-badges-overlay {
+          position: static;
+          transform: none;
+          margin-top: 2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .business-badge-item {
+          transform: translateY(20px);
+        }
+
+        .business-badge-item.active {
+          transform: translateY(0);
+        }
+
+        .business-badge-item.right {
+          transform: translateY(20px);
+        }
+
+        .business-badge-item.right.active {
+          transform: translateY(0);
+        }
+
+        .business-progress-nav {
+          right: 15px;
+          gap: 12px;
+        }
+
+        .business-nav-item {
+          width: 8px;
+          height: 8px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .business-scroll-track {
+          height: 300vh;
+        }
+
+        .business-image-container {
+          width: 95%;
+          height: 50vh;
+        }
+
+        .business-progress-nav {
+          right: 10px;
+          gap: 10px;
+        }
+
+        .business-nav-item {
+          width: 6px;
+          height: 6px;
+        }
+      }
     </style>
     <script>
                                                                                                                                                                                         // Store selected services
@@ -489,7 +669,8 @@
                                                                                 title: "Create an Online Store Today",
                                                                                 description: "Innovative web development and digital marketing strategies to scale your business.",
                                                                                 viewWebsite: "View Website",
-                                                                                buildWebsite: "Build a Website"
+                                                                                buildWebsite: "Build a Website",
+                                                                                subscriptionPackages: "Subscription Packages"
                                                                               },
                                                                               // Business Features
                                                                               features: {
@@ -679,7 +860,8 @@
                                                                                 title: "আজই একটি অনলাইন স্টোর তৈরি করুন",
                                                                                 description: "আপনার ব্যবসা স্কেল করতে উদ্ভাবনী ওয়েব ডেভেলপমেন্ট এবং ডিজিটাল মার্কেটিং কৌশল।",
                                                                                 viewWebsite: "ওয়েবসাইট দেখুন",
-                                                                                buildWebsite: "ওয়েবসাইট তৈরি করুন"
+                                                                                buildWebsite: "ওয়েবসাইট তৈরি করুন",
+                                                                                subscriptionPackages: "সাবস্ক্রিপশন প্যাকেজ"
                                                                               },
                                                                               // Business Features - বাংলা
                                                                               features: {
@@ -983,7 +1165,158 @@
                                                                           }
                                                                         }
 
-      // Modal Logic
+
+  //  Sign in Logic
+  function openSignInModal() {
+    const modal = document.getElementById('signInModal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        modal.classList.add('active');
+        modal.style.opacity = '1';
+      }, 10);
+    } else {
+      console.error('Sign in modal not found in DOM');
+    }
+  }
+
+  function closeSignInModal() {
+    const modal = document.getElementById('signInModal');
+    if (modal) {
+      modal.classList.remove('active');
+      modal.style.opacity = '0';
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  function switchAuthTab(tab) {
+    const signInTab = document.getElementById('signInTab');
+    const registerTab = document.getElementById('registerTab');
+    const signInForm = document.getElementById('signInForm');
+    const registerForm = document.getElementById('registerForm');
+
+    if (tab === 'signin') {
+      signInTab.classList.add('border-[#FF6B01]', 'text-[#FF6B01]');
+      signInTab.classList.remove('border-transparent', 'text-gray-400');
+      registerTab.classList.remove('border-[#FF6B01]', 'text-[#FF6B01]');
+      registerTab.classList.add('border-transparent', 'text-gray-400');
+      signInForm.classList.remove('hidden');
+      signInForm.classList.add('block');
+      registerForm.classList.remove('block');
+      registerForm.classList.add('hidden');
+    } else {
+      registerTab.classList.add('border-[#FF6B01]', 'text-[#FF6B01]');
+      registerTab.classList.remove('border-transparent', 'text-gray-400');
+      signInTab.classList.remove('border-[#FF6B01]', 'text-[#FF6B01]');
+      signInTab.classList.add('border-transparent', 'text-gray-400');
+      registerForm.classList.remove('hidden');
+      registerForm.classList.add('block');
+      signInForm.classList.remove('block');
+      signInForm.classList.add('hidden');
+    }
+  }
+
+  async function handleSignIn(event) {
+    event.preventDefault();
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
+
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Signing in...";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch('auth.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'signin',
+          email: email,
+          password: password
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Welcome back! ' + result.name);
+        closeSignInModal();
+        event.target.reset();
+        // You can redirect or update UI here
+        // window.location.href = 'dashboard.html';
+      } else {
+        alert('Error: ' + (result.error || 'Invalid credentials'));
+      }
+    } catch (error) {
+      console.error('Sign in error:', error);
+      alert('Connection error! Please make sure auth.php is uploaded to your cPanel.');
+    } finally {
+      submitBtn.innerText = originalText;
+      submitBtn.disabled = false;
+    }
+  }
+
+  async function handleRegister(event) {
+    event.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const phone = document.getElementById('registerPhone').value;
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Creating account...";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch('auth.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'register',
+          name: name,
+          email: email,
+          phone: phone,
+          password: password
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Account created successfully! You can now sign in.');
+        switchAuthTab('signin');
+        event.target.reset();
+      } else {
+        alert('Error: ' + (result.error || 'Could not create account'));
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Connection error! Please make sure auth.php is uploaded to your cPanel.');
+    } finally {
+      submitBtn.innerText = originalText;
+      submitBtn.disabled = false;
+    }
+  }
+
+                  // Modal Logic
       function openBookingModal() {
         const modal = document.getElementById('bookingModal');
         modal.classList.remove('hidden');
@@ -1088,6 +1421,7 @@
           if (event.key === 'Escape') {
             if (menu && menu.classList.contains('show')) closeMenu();
             closeBookingModal();
+            closeSignInModal();
             hidePopup();
           }
         });
@@ -1287,7 +1621,7 @@
               <img class="w-6 h-6 lg:w-8 lg:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
               <span class="text-[#ff6f03] text-sm lg:text-base font-medium">English</span>
             </button>
-            <button
+            <button onclick="openSignInModal()"
               class="px-4 lg:px-6 py-2 lg:py-3 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-sm lg:text-base font-medium"
               data-translate="nav.signIn">Sign in</button>
             <button onclick="openBookingModal()"
@@ -1363,7 +1697,7 @@
                 <img class="w-7 h-7 sm:w-8 sm:h-8" src="https://c.animaapp.com/MnwsBUVG/img/carbon-language.svg" alt="" />
                 <span class="text-[#ff6f03] text-base sm:text-lg font-medium">English</span>
                 </button>
-              <button
+              <button onclick="openSignInModal(); closeMenu();"
                 class="w-full px-6 py-3 sm:py-4 rounded-full hover:bg-gray-100 transition text-[#ff6f03] text-base sm:text-lg font-medium">Sign
                 in</button>
               <button onclick="openBookingModal(); closeMenu();"
@@ -1481,13 +1815,107 @@
       </div>
     </div>
 
+    <!-- Sign In / Register Modal -->
+    <div id="signInModal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 overflow-y-auto">
+      <div class="absolute inset-0" onclick="closeSignInModal()"></div>
+    
+      <div
+        class="relative bg-white w-full max-w-[450px] rounded-2xl sm:rounded-[30px] shadow-2xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]">
+        <!-- Close Button -->
+        <button onclick="closeSignInModal()"
+          class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 hover:text-gray-600 transition-colors z-20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+    
+        <!-- Tabs -->
+        <div class="flex gap-4 mb-6 border-b border-gray-200">
+          <button id="signInTab" onclick="switchAuthTab('signin')"
+            class="pb-3 px-2 text-lg font-semibold border-b-2 border-[#FF6B01] text-[#FF6B01] transition">
+            Sign In
+          </button>
+          <button id="registerTab" onclick="switchAuthTab('register')"
+            class="pb-3 px-2 text-lg font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition">
+            Register
+          </button>
+        </div>
+    
+        <!-- Sign In Form -->
+        <div id="signInForm" class="block">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
+          <form onsubmit="handleSignIn(event)" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <input type="email" id="signInEmail" placeholder="Enter your email" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <input type="password" id="signInPassword" placeholder="Enter your password" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="flex items-center">
+                <input type="checkbox" class="w-4 h-4 text-[#FF6B01] border-gray-300 rounded focus:ring-[#FF6B01]" />
+                <span class="ml-2 text-sm text-gray-600">Remember me</span>
+              </label>
+            </div>
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all active:scale-[0.98]">
+              Sign In
+            </button>
+          </form>
+        </div>
+    
+        <!-- Register Form -->
+        <div id="registerForm" class="hidden">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Account</h2>
+          <form onsubmit="handleRegister(event)" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+              <input type="text" id="registerName" placeholder="Enter your full name" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <input type="email" id="registerEmail" placeholder="Enter your email" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <input type="tel" id="registerPhone" placeholder="+880 1XXX-XXXXXX" required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <input type="password" id="registerPassword" placeholder="Create a password" required minlength="6"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+              <input type="password" id="registerConfirmPassword" placeholder="Confirm your password" required minlength="6"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B01] focus:border-transparent transition" />
+            </div>
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all active:scale-[0.98]">
+              Create Account
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Website Showcase Section -->
     <div id="websites"
       class="max-w-[1280px] mx-auto px-4 py-12 sm:py-20 bg-white rounded-[30px] sm:rounded-[100px] -mt-8 sm:-mt-16 relative z-10">
       <div class="text-center mb-8 sm:mb-12 px-2">
-        <h2 class="text-[28px] sm:text-5xl font-medium text-black mb-3 sm:mb-2 leading-[1.3]">Create an Online Store Today
+        <h2 class="text-[28px] sm:text-5xl font-medium text-black mb-3 sm:mb-2 leading-[1.3]" data-translate="showcase.title">
+          Create an Online Store Today
         </h2>
-        <p class="text-[15px] sm:text-lg text-[#4e4e4e] font-medium leading-relaxed">Innovative web development and digital
+        <p class="text-[15px] sm:text-lg text-[#4e4e4e] font-medium leading-relaxed" data-translate="showcase.description">
+          Innovative web development and digital
           marketing strategies to scale your business.</p>
       </div>
 
@@ -1499,28 +1927,32 @@
             <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568225100.webp"
               alt="Website" />
             <div class="p-3">
-              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                Website</button>
             </div>
           </div>
           <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
             <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568303877.webp"
               alt="Website" />
             <div class="p-3">
-              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                Website</button>
             </div>
           </div>
           <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
             <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568351412.webp"
               alt="Website" />
             <div class="p-3">
-              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                Website</button>
             </div>
           </div>
           <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
             <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568460126.webp"
               alt="Website" />
             <div class="p-3">
-              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+              <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                Website</button>
             </div>
           </div>
           <!-- Duplicate Cards for Seamless Loop -->
@@ -1528,30 +1960,81 @@
             <img class="w-full h-[199px] object-cover" src="https://hdnfltv.com/image/nitimages/pasted_1770568493317.webp"
               alt="Website" />
             <div class="p-3">
-                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                    Website</button>
                   </div>
                   </div>
               <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
                 <img class="w-full h-[199px] object-cover"
                   src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
                 <div class="p-3">
-                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                    Website</button>
                   </div>
                   </div>
               <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
                 <img class="w-full h-[199px] object-cover"
                   src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
                 <div class="p-3">
-                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                  <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                    Website</button>
                   </div>
                   </div>
               <div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
                 <img class="w-full h-[199px] object-cover"
                   src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
                 <div class="p-3">
-                      <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base">View Website</button>
+                      <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base" data-translate="showcase.viewWebsite">View
+                        Website
+                      </button>
                       </div>
-          </div>
+                      </div>
+<div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+  <img class="w-full h-[199px] object-cover"
+    src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+  <div class="p-3">
+    <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base"
+      data-translate="showcase.viewWebsite">View
+      Website
+    </button>
+  </div>
+</div>
+
+<div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+  <img class="w-full h-[199px] object-cover"
+    src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+  <div class="p-3">
+    <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base"
+      data-translate="showcase.viewWebsite">View
+      Website
+    </button>
+  </div>
+</div>
+
+<div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+  <img class="w-full h-[199px] object-cover"
+    src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+  <div class="p-3">
+    <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base"
+      data-translate="showcase.viewWebsite">View
+      Website
+    </button>
+  </div>
+</div>
+
+
+
+<div class="slide-card bg-white rounded-[20px] overflow-hidden shadow-sm">
+  <img class="w-full h-[199px] object-cover"
+    src="https://c.animaapp.com/MnwsBUVG/img/softlab-it-website-banner-1-11@2x.png" alt="Website" />
+  <div class="p-3">
+    <button class="w-full py-3 bg-[#f8f8f8] rounded-[10px] text-black text-base"
+      data-translate="showcase.viewWebsite">View
+      Website
+    </button>
+  </div>
+</div>
+
         </div>
       </div>
 
@@ -1570,10 +2053,10 @@
       <!-- CTA Buttons -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-1">
         <a href="https://allinbangla.com/register" target="_blank"
-          class="w-full sm:w-auto text-center px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition inline-block">Build
+          class="w-full sm:w-auto text-center px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition inline-block" data-translate="showcase.buildWebsite">Build
           a Website</a>
         <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'})"
-          class="w-full sm:w-auto text-center flex items-center justify-center gap-2 px-6 py-2 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-base font-medium">Subscription
+          class="w-full sm:w-auto text-center flex items-center justify-center gap-2 px-6 py-2 rounded-[99px] hover:bg-gray-100 transition text-[#ff6f03] text-base font-medium" data-translate="showcase.subscriptionPackages">Subscription
           Packages</button>
       </div>
       </div>
@@ -1617,53 +2100,104 @@
           class="chat-main-btn fixed bottom-4 right-4 sm:bottom-8 sm:right-8 w-14 h-14 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] cursor-pointer transition"
           style="z-index: 10000;" src="https://c.animaapp.com/MnwsBUVG/img/lets-icons-chat-fill.png" alt="Chat" />
 
-    <!-- Business Features Section -->
-    <div class="max-w-[970px] mx-auto px-4 py-20">
-      <div class="text-center mb-12">
-        <h2 class="text-5xl font-medium text-black mb-2">Support for essential Business features</h2>
-        <p class="text-lg text-[#4e4e4e] font-medium max-w-[946px] mx-auto">We offer a SaaS dashboard with live chat and AI-powered assistance to create landing pages, manage products, and complete tasks faster.</p>
+    <!-- Business Features Section with Scroll Animation -->
+    <div class="max-w-[970px] mx-auto px-4 py-12 sm:py-16">
+      <div class="text-center mb-8 sm:mb-12">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-medium text-black mb-2" data-translate="features.title">Support for
+          essential Business features</h2>
+        <p class="text-base sm:text-lg text-[#4e4e4e] font-medium max-w-[946px] mx-auto px-4">We offer a SaaS dashboard with
+          live chat and AI-powered assistance to create landing pages, manage products, and complete tasks faster.</p>
       </div>
-
-      <!-- Dashboard Preview -->
-      <div class="relative mb-12">
-        <div class="relative">
-          <img class="mx-auto" src="https://c.animaapp.com/MnwsBUVG/img/elm2.png" alt="" />
-          <img class="mx-auto mt-2" src="https://c.animaapp.com/MnwsBUVG/img/group-14.png" alt="" />
-          <img class="mx-auto mt-2" src="https://c.animaapp.com/MnwsBUVG/img/image-953.png" alt="" />
-        </div>
-
-        <!-- Feature Badges -->
-        <div class="static mt-8 flex flex-col gap-4 items-center lg:absolute lg:top-1/2 lg:left-0 lg:right-0 lg:flex-col lg:gap-10 lg:mt-0">
-          <div class="lg:ml-20 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3">
-            <div class="w-9 h-9 rounded-full bg-[#c491d7] flex items-center justify-center">
-              <img class="w-4 h-4" src="https://c.animaapp.com/MnwsBUVG/img/exchange-alt.svg" alt="" />
+    </div>
+    <!-- Scroll Animation Section -->
+    <div class="business-scroll-track" id="business-track">
+      <div class="business-sticky-viewport">
+        <div class="business-image-container" id="business-image-container">
+          <!-- Images -->
+          <img src="https://hdnfltv.com/image/nitimages/pasted_1770581059114.webp" class="business-scroll-image active"
+            alt="Dashboard Overview">
+          <img src="https://hdnfltv.com/image/nitimages/pasted_1770581050653.webp" class="business-scroll-image"
+            alt="Analytics View">
+          <img src="https://hdnfltv.com/image/nitimages/pasted_1770581040543.webp" class="business-scroll-image"
+            alt="Product Management">
+          <img src="https://hdnfltv.com/image/nitimages/pasted_1770581027572.webp" class="business-scroll-image"
+            alt="Complete Dashboard">
+    
+          <!-- Feature Badges Overlay (Desktop) -->
+          <div class="business-badges-overlay hidden lg:flex flex-col gap-10">
+            <div class="business-badge-item ml-20 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+              data-badge="0">
+              <div class="w-9 h-9 rounded-full bg-[#c491d7] flex items-center justify-center">
+                <img class="w-4 h-4" src="https://c.animaapp.com/MnwsBUVG/img/exchange-alt.svg" alt="" />
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.integrated">INTEGRATED
+                SYSTEM</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-[#454452]">INTEGRATED SYSTEM</span>
-          </div>
-
-          <div class="lg:ml-auto lg:mr-8 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3">
-            <div class="w-9 h-9 rounded-full bg-[#fea68b] flex items-center justify-center">
-              <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/eye.svg" alt="" />
+            <div
+              class="business-badge-item right ml-auto mr-8 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+              data-badge="1">
+              <div class="w-9 h-9 rounded-full bg-[#fea68b] flex items-center justify-center">
+                <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/eye.svg" alt="" />
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.cashFlow">MONITORED CASH
+                FLOW</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-[#454452]">MONITORED CASH FLOW</span>
-          </div>
 
-          <div class="lg:ml-10 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3">
-            <div class="w-9 h-9 rounded-full bg-[#a586fe] flex items-center justify-center">
-              <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/dice-d20.svg" alt="" />
+            <div class="business-badge-item ml-10 w-fit flex items-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+              data-badge="2">
+              <div class="w-9 h-9 rounded-full bg-[#a586fe] flex items-center justify-center">
+                <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/dice-d20.svg" alt="" />
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.inventory">INVENTORY
+                MANAGEMENT</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-[#454452]">INVENTORY MANAGEMENT</span>
-          </div>
-        </div>
+            </div>
+            <!-- Mobile Badges (shown below image on mobile) -->
+            <div class="business-badges-overlay lg:hidden px-4">
+              <div
+                class="business-badge-item w-full flex items-center justify-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+                data-badge-mobile="0">
+                <div class="w-9 h-9 rounded-full bg-[#c491d7] flex items-center justify-center">
+                  <img class="w-4 h-4" src="https://c.animaapp.com/MnwsBUVG/img/exchange-alt.svg" alt="" />
+                </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.integrated">INTEGRATED
+                SYSTEM</span>
+              </div>
 
-        <img class="absolute top-0 right-0 w-[40px] sm:w-[68px]" src="https://c.animaapp.com/MnwsBUVG/img/arrow.png" alt="" />
-      </div>
+            <div class="business-badge-item w-full flex items-center justify-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+              data-badge-mobile="1">
+              <div class="w-9 h-9 rounded-full bg-[#fea68b] flex items-center justify-center">
+                <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/eye.svg" alt="" />
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.cashFlow">MONITORED CASH
+                FLOW</span>
+              </div>
 
-      <div class="text-center">
-        <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'})"
-          class="px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#38BDF8] to-[#1E90FF] text-white text-sm font-bold hover:shadow-lg transition">View
-          Pricing</button>
-      </div>
+            <div class="business-badge-item w-full flex items-center justify-center gap-3 bg-white rounded-full shadow-lg px-4 py-3"
+              data-badge-mobile="2">
+              <div class="w-9 h-9 rounded-full bg-[#a586fe] flex items-center justify-center">
+                <img class="w-3.5 h-3.5" src="https://c.animaapp.com/MnwsBUVG/img/dice-d20.svg" alt="" />
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-[#454452]" data-translate="features.inventory">INVENTORY
+                MANAGEMENT</span>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+
+    <!-- Navigation Dots -->
+    <nav class="business-progress-nav">
+      <div class="business-nav-item active" data-business-index="0"></div>
+      <div class="business-nav-item" data-business-index="1"></div>
+      <div class="business-nav-item" data-business-index="2"></div>
+      <div class="business-nav-item" data-business-index="3"></div>
+    </nav>
+    <!-- View Pricing Button -->
+    <div class="max-w-[970px] mx-auto px-4 py-12 text-center">
+      <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'})"
+        class="px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#38BDF8] to-[#1E90FF] text-white text-sm font-bold hover:shadow-lg transition">View
+        Pricing</button>
     </div>
 
     <!-- Steps Section -->
@@ -1879,7 +2413,12 @@
         </div>
 
         <div class="text-center px-4">
-          <button onclick="openBookingModal()" class="w-full md:w-auto px-8 md:px-16 py-3 rounded-[69px] bg-gradient-to-b from-[#FF6A00] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition border border-transparent">Setup Your Shop</button>
+          <!-- this is redirection allinbangla regirster page -->
+          <a href="https://allinbangla.com/register" target="_blank"
+            class="w-full sm:w-auto text-center px-6 py-3 rounded-[88px] bg-gradient-to-r from-[#FF6B01] to-[#FF9F1C] text-white text-sm font-bold hover:shadow-lg transition inline-block"
+            data-translate="showcase.buildWebsite">Build
+            a Website</a>
+
         </div>
       </div>
     </div>
@@ -2043,8 +2582,9 @@
       <div class="max-w-[1252px] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Facebook Marketing -->
         <div class="bg-white rounded-3xl p-8 flex flex-col">
-          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Facebook Marketing</h3>
-          <p class="text-sm text-[#2f2f2f] mb-6">Proven strategies to boost your online sales.</p>
+          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2" data-translate="marketing.facebook">Facebook Marketing</h3>
+          <p class="text-sm text-[#2f2f2f] mb-6" data-translate="marketing.facebookDesc">Proven strategies to boost your online
+            sales.</p>
 
           <div class="space-y-4 mb-6 flex-grow">
             <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
@@ -2070,13 +2610,16 @@
             </div>
           </div>
 
-          <button onclick="openBookingModal()" class="w-full py-3 rounded-[69px] bg-[#008c09] text-white text-sm font-bold hover:shadow-lg transition">Get Appointment</button>
+          <button onclick="openBookingModal()"
+            class="w-full py-3 rounded-[69px] bg-[#008c09] text-white text-sm font-bold hover:shadow-lg transition"
+            data-translate="marketing.getAppointment">Get Appointment</button>
         </div>
 
         <!-- SEO -->
         <div class="bg-white rounded-3xl p-8 flex flex-col">
-          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">SEO</h3>
-          <p class="text-sm text-[#2f2f2f] mb-6">Better rankings. More traffic. Higher revenue.</p>
+          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2" data-translate="marketing.seo">SEO</h3>
+          <p class="text-sm text-[#2f2f2f] mb-6" data-translate="marketing.seoDesc">Better rankings. More traffic. Higher revenue.
+          </p>
 
           <div class="space-y-4 mb-6 flex-grow">
             <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
@@ -2109,13 +2652,16 @@
             </div>
           </div>
 
-          <button onclick="openBookingModal()" class="w-full py-3 rounded-[69px] border border-[#f07800] text-[#f17800] text-sm font-bold hover:bg-[#f07800] hover:text-white transition">Get Appointment</button>
+          <button onclick="openBookingModal()"
+            class="w-full py-3 rounded-[69px] border border-[#f07800] text-[#f17800] text-sm font-bold hover:bg-[#f07800] hover:text-white transition"
+            data-translate="marketing.getAppointment">Get Appointment</button>
         </div>
 
         <!-- Contract Basis -->
         <div class="bg-white rounded-3xl p-8 flex flex-col">
-          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2">Contract Basis</h3>
-          <p class="text-sm text-[#2f2f2f] mb-6">Grow your business with long-term organic growth.</p>
+          <h3 class="text-2xl font-bold text-[#2f2f2f] mb-2" data-translate="marketing.contract">Contract Basis</h3>
+          <p class="text-sm text-[#2f2f2f] mb-6" data-translate="marketing.contractDesc">Grow your business with long-term organic
+            growth.</p>
 
           <div class="space-y-4 mb-6 flex-grow">
             <div class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
@@ -2134,7 +2680,9 @@
             </div>
           </div>
 
-          <button onclick="openBookingModal()" class="w-full py-3 rounded-[69px] border border-[#3854f8] text-[#3854f8] text-sm font-bold hover:bg-[#3854f8] hover:text-white transition">Get Appointment</button>
+          <button onclick="openBookingModal()"
+            class="w-full py-3 rounded-[69px] border border-[#3854f8] text-[#3854f8] text-sm font-bold hover:bg-[#3854f8] hover:text-white transition"
+            data-translate="marketing.getAppointment">Get Appointment</button>
         </div>
       </div>
     </div>
@@ -2157,8 +2705,9 @@
             <div
               class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653@2x.png" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Web</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">Next.js, React.js</span> Professional web development using modern frameworks like Next.js and React.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.web">Web</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.webDesc"><span class="font-medium">Next.js,
+                  React.js</span> Professional web development using modern frameworks like Next.js and React.</p>
             </div>
           </div>
 
@@ -2166,8 +2715,9 @@
           <div class="service-tech-card relative">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/flask.svg" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">E-commerce</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">Powerful, Scalable</span><br/><br/>Secure eCommerce stores with smooth checkout and high conversions.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.ecommerce">E-commerce</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.ecommerceDesc"><span class="font-medium">Powerful,
+                  Scalable</span><br /><br />Secure eCommerce stores with smooth checkout and high conversions.</p>
             </div>
           </div>
 
@@ -2175,8 +2725,9 @@
           <div class="service-tech-card relative">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/pound.svg" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">App</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">React Native, Flutter</span><br/><br/>Build cross-platform mobile apps with smooth performance.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.app">App</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.appDesc"><span class="font-medium">React Native,
+                  Flutter</span><br /><br />Build cross-platform mobile apps with smooth performance.</p>
             </div>
           </div>
 
@@ -2184,8 +2735,9 @@
           <div class="service-tech-card relative">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653-1@2x.png" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Interface Design</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">UI/UX, Figma</span><br/><br/>Engaging and intuitive interface design for better user experience.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.interface">Interface Design</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.interfaceDesc"><span class="font-medium">UI/UX,
+                  Figma</span><br /><br />Engaging and intuitive interface design for better user experience.</p>
             </div>
           </div>
 
@@ -2193,8 +2745,9 @@
           <div class="service-tech-card relative mt-0">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653-3@2x.png" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Brand Identity</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">Logo, Style Guide, Assets</span> Creating a unique brand voice and visual identity that stands out.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.brand">Brand Identity</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.brandDesc"><span class="font-medium">Logo, Style Guide,
+                  Assets</span> Creating a unique brand voice and visual identity that stands out.</p>
             </div>
           </div>
 
@@ -2202,8 +2755,9 @@
           <div class="service-tech-card relative mt-0">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/group-33653-2@2x.png" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Social Media</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">SEO, Digital Marketing</span><br/><br/>Grow your presence with strategic SEO and marketing campaigns.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.social">Social Media</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.socialDesc"><span class="font-medium">SEO, Digital
+                  Marketing</span><br /><br />Grow your presence with strategic SEO and marketing campaigns.</p>
             </div>
           </div>
 
@@ -2211,8 +2765,9 @@
           <div class="service-tech-card relative mt-0">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/puzzle-1.svg" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">SaaS</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">Software as a Service</span><br/><br/>Create professional E-commerce websites instantly without any coding.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.saas">SaaS</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.saasDesc"><span class="font-medium">Software as a
+                  Service</span><br /><br />Create professional E-commerce websites instantly without any coding.</p>
             </div>
           </div>
 
@@ -2220,8 +2775,9 @@
           <div class="service-tech-card relative mt-0">
             <div class="service-content-box bg-transparent rounded-3xl sm:rounded-[40px] border-t-[3px] border-transparent hover:border-[#30A2FF] p-5 sm:p-6 pt-12 sm:pt-16 h-full">
               <img class="w-20 h-20 sm:w-28 sm:h-28 mb-4" src="https://c.animaapp.com/MnwsBUVG/img/puzzle.svg" alt="" />
-              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4">Maintenance</h3>
-              <p class="text-base text-[#4e4e4e]"><span class="font-medium">Security, Updates, Logs</span><br/><br/>24/7 support to keep your apps secure, updated, and running smoothly.</p>
+              <h3 class="text-xl sm:text-2xl font-medium text-black mb-4" data-translate="techSection.maintenance">Maintenance</h3>
+              <p class="text-base text-[#4e4e4e]" data-translate="techSection.maintenanceDesc"><span class="font-medium">Security,
+                  Updates, Logs</span><br /><br />24/7 support to keep your apps secure, updated, and running smoothly.</p>
             </div>
           </div>
         </div>
@@ -2250,10 +2806,10 @@
     </div>
 
     <!-- Contact & Footer Section -->
-    <div id="contact" class="relative mt-12 sm:mt-20 bg-black pb-0">
+    <div id="contact" class="relative mt-8 sm:mt-12 bg-black pb-0">
       <!-- Contact Form -->
-      <div class="max-w-[900px] mx-auto px-4 lg:px-4 relative z-10 pb-8 lg:pb-12">
-        <div class="text-center mb-8 lg:mb-12 pt-8 lg:pt-12">
+      <div class="max-w-[1200px] mx-auto px-4 lg:px-8 relative z-10 pb-4 lg:pb-6">
+        <div class="text-center mb-6 lg:mb-8 pt-6 lg:pt-8">
           <h2 class="text-5xl lg:text-[56px] font-bold text-white mb-4" style="font-family: Poppins;"
             data-translate="contact.title">Contact Us
           </h2>
@@ -2427,6 +2983,11 @@
         </div>
       </div>
 
+      <!-- Divider Line -->
+      <div class="w-full px-8 lg:px-32">
+        <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+      </div>
+
       <!-- Footer -->
       <footer class="bg-black lg:bg-cover lg:bg-center lg:bg-no-repeat mt-0 pt-12 lg:pt-20 pb-8 lg:pb-8 px-8 lg:px-32"
         style="background-image: url('https://c.animaapp.com/MnwsBUVG/img/rectangle-3842.svg')">
@@ -2513,5 +3074,147 @@
         </div>
       </footer>
     </div>
+<!-- Business Features Scroll Animation Script -->
+<script>
+  (function () {
+    const businessTrack = document.getElementById('business-track');
+    if (!businessTrack) return; // Exit if element not found
+
+    const businessImages = document.querySelectorAll('.business-scroll-image');
+    const businessNavItems = document.querySelectorAll('.business-nav-item');
+    const businessBadges = document.querySelectorAll('.business-badge-item[data-badge]');
+    const businessBadgesMobile = document.querySelectorAll('.business-badge-item[data-badge-mobile]');
+
+    // Initialize first badge as active
+    if (businessBadges.length > 0) {
+      businessBadges[0].classList.add('active');
+    }
+    if (businessBadgesMobile.length > 0) {
+      businessBadgesMobile[0].classList.add('active');
+    }
+
+    function updateBusinessScroll() {
+      const rect = businessTrack.getBoundingClientRect();
+      const trackTop = rect.top;
+      const trackHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // Calculate scroll progress within the track
+      let scrollProgress = 0;
+      if (trackTop <= 0 && trackTop > -trackHeight + viewportHeight) {
+        scrollProgress = Math.abs(trackTop) / (trackHeight - viewportHeight);
+      } else if (trackTop > 0) {
+        scrollProgress = 0;
+      } else {
+        scrollProgress = 1;
+      }
+
+      scrollProgress = Math.max(0, Math.min(scrollProgress, 1));
+
+      const totalSteps = businessImages.length;
+      const rawIndex = scrollProgress * totalSteps;
+      const activeIndex = Math.min(Math.floor(rawIndex), totalSteps - 1);
+      const stepProgress = rawIndex % 1;
+
+      // Update images
+      businessImages.forEach((img, i) => {
+        img.classList.remove('active', 'exit');
+        img.style.transform = '';
+        img.style.filter = '';
+        img.style.opacity = '';
+
+        if (i === activeIndex) {
+          img.classList.add('active');
+
+          // Hold image at 100% clear until 70% of scroll progress
+          // Then apply exit animation in the last 30%
+          if (activeIndex < totalSteps - 1 && stepProgress > 0.7) {
+            const factor = (stepProgress - 0.7) / 0.3;
+            const zOffset = factor * 600;
+            const scaleOffset = 1 + (factor * 0.4);
+            const blurValue = factor * 15;
+
+            img.style.transform = `translateZ(${zOffset}px) scale(${scaleOffset})`;
+            img.style.filter = `blur(${blurValue}px)`;
+            img.style.opacity = 1 - (factor * 1.5);
+          }
+        } else if (i < activeIndex) {
+          img.classList.add('exit');
+        }
+      });
+
+      // Update navigation dots
+      businessNavItems.forEach((item, i) => {
+        if (i === activeIndex) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Update badges with staggered animation
+      businessBadges.forEach((badge, i) => {
+        const badgeIndex = parseInt(badge.getAttribute('data-badge'));
+        if (badgeIndex === activeIndex) {
+          setTimeout(() => {
+            badge.classList.add('active');
+          }, i * 100); // Stagger by 100ms
+        } else {
+          badge.classList.remove('active');
+        }
+      });
+
+      // Update mobile badges
+      businessBadgesMobile.forEach((badge, i) => {
+        const badgeIndex = parseInt(badge.getAttribute('data-badge-mobile'));
+        if (badgeIndex === activeIndex) {
+          setTimeout(() => {
+            badge.classList.add('active');
+          }, i * 100);
+        } else {
+          badge.classList.remove('active');
+        }
+      });
+    }
+
+    // Click navigation
+    businessNavItems.forEach((item, i) => {
+      item.addEventListener('click', () => {
+        const trackRect = businessTrack.getBoundingClientRect();
+        const trackHeight = trackRect.height;
+        const viewportHeight = window.innerHeight;
+        const maxScroll = trackHeight - viewportHeight;
+        const targetScroll = (i / businessImages.length) * maxScroll;
+        const currentScrollY = window.scrollY;
+        const trackOffsetTop = businessTrack.offsetTop;
+
+        window.scrollTo({
+          top: trackOffsetTop + targetScroll,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Throttle function for performance
+    let ticking = false;
+    function requestUpdateBusinessScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateBusinessScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestUpdateBusinessScroll);
+    window.addEventListener('resize', updateBusinessScroll);
+
+    // Initial update with slight delay to ensure DOM is ready
+    setTimeout(() => {
+      updateBusinessScroll();
+    }, 100);
+  })();
+</script>
   </body>
 </html>
